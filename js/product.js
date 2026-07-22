@@ -160,11 +160,32 @@ localStorage.getItem("cart")
 
 
 
+let item =
+cart.find(
+x=>x.id==productId
+);
+
+
+
+if(item){
+
+
+item.quantity++;
+
+
+}else{
+
+
 cart.push({
 
-id:productId
+id:Number(productId),
+
+quantity:1
 
 });
+
+
+}
 
 
 
