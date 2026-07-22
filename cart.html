@@ -1,24 +1,46 @@
 <!DOCTYPE html>
 
-<html lang="zh-CN">
-
+<html>
 
 <head>
 
-
 <meta charset="UTF-8">
 
-
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-
-
-<title>
-购物车
-</title>
+<title>购物车</title>
 
 
+<style>
 
-<link rel="stylesheet" href="css/style.css">
+
+.card{
+
+border:1px solid #ddd;
+
+padding:20px;
+
+margin:15px;
+
+width:300px;
+
+}
+
+
+img{
+
+width:150px;
+
+}
+
+
+
+button{
+
+padding:8px 15px;
+
+}
+
+
+</style>
 
 
 </head>
@@ -29,184 +51,19 @@
 
 
 
-<header>
+<h1>我的购物车</h1>
 
 
-<div class="logo">
 
-🍶 国韵白酒
+<div id="cart-list"></div>
 
-</div>
 
 
+<h2 id="total"></h2>
 
 
-<nav>
 
-
-<a href="index.html">
-
-首页
-
-</a>
-
-
-
-<a href="my-orders.html">
-
-我的订单
-
-</a>
-
-
-
-</nav>
-
-
-
-</header>
-
-
-
-
-
-
-
-
-
-<div class="container">
-
-
-
-<h1>
-
-🛒 我的购物车
-
-</h1>
-
-
-
-
-
-
-
-<div id="cart-list">
-
-加载中...
-
-</div>
-
-
-
-
-
-
-
-
-<h2 id="total">
-
-总价：¥0
-
-</h2>
-
-
-
-
-
-
-
-<button onclick="clearCart()">
-
-清空购物车
-
-</button>
-
-
-
-
-
-
-
-
-<hr>
-
-
-
-
-
-
-
-<h2>
-
-收货信息
-
-</h2>
-
-
-
-
-
-
-
-
-<input
-
-id="customer"
-
-placeholder="收货人姓名"
-
->
-
-
-
-
-
-
-<input
-
-id="phone"
-
-placeholder="手机号"
-
->
-
-
-
-
-
-
-
-<textarea
-
-id="address"
-
-placeholder="详细收货地址">
-
-</textarea>
-
-
-
-
-
-
-
-<button onclick="submitOrder()">
-
-提交订单
-
-</button>
-
-
-
-
-
-<br><br>
-
-
-
-
-
-<a href="index.html">
+<a href="product.html">
 
 继续购物
 
@@ -214,60 +71,179 @@ placeholder="详细收货地址">
 
 
 
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<footer>
-
-
-© 2026 国韵白酒商城
-
-
-</footer>
-
-
-
-
-
-
-
-
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-
-
-<script src="js/cart.js"></script>
-
-
-
-
 
 
 
 <script>
 
 
-function clearCart(){
+
+const SUPABASE_URL =
+"https://ukxxmxnubxjezkwbbxdr.supabase.co";
+
+
+const SUPABASE_KEY =
+"sb_publishable_2IFHfms3ombozpvZCvaeEg_2VZ2z5hJ";
 
 
 
-localStorage.removeItem(
-"cart"
+const client =
+supabase.createClient(
+
+SUPABASE_URL,
+
+SUPABASE_KEY
+
 );
 
 
 
-location.reload();
+
+
+let cart =
+JSON.parse(
+
+localStorage.getItem("cart")
+
+||
+
+"[]"
+
+);
+
+
+
+
+
+
+
+async function loadCart(){
+
+
+
+let html="";
+
+
+let total=0;
+
+
+
+for(let item of cart){
+
+
+
+const {data,error}=await client
+
+.from("products")
+
+.select("*")
+
+.eq(
+
+"id",
+
+item.id
+
+)
+
+.single();
+
+
+
+if(error){
+
+console.log(error);
+
+continue;
+
+}
+
+
+
+
+let quantity =
+item.quantity || 1;
+
+
+
+total +=
+
+Number(data.price)
+
+*
+
+quantity;
+
+
+
+
+
+html+=`
+
+<div class="card">
+
+
+<img src="${data.image}">
+
+
+<h3>
+
+${data.name}
+
+</h3>
+
+
+
+<p>
+
+单价：
+
+¥${data.price}
+
+</p>
+
+
+
+<p>
+
+数量：
+
+${quantity}
+
+</p>
+
+
+
+
+<button onclick="changeQuantity(${data.id},1)">
+
++
+
+</button>
+
+
+
+<button onclick="changeQuantity(${data.id},-1)">
+
+-
+
+</button>
+
+
+
+<button onclick="removeCart(${data.id})">
+
+删除
+
+</button>
+
+
+
+</div>
+
+
+`;
 
 
 
@@ -275,15 +251,145 @@ location.reload();
 
 
 
+
+
+if(html==""){
+
+
+html="<h2>购物车为空</h2>";
+
+
+}
+
+
+
+document.getElementById(
+
+"cart-list"
+
+).innerHTML=html;
+
+
+
+document.getElementById(
+
+"total"
+
+).innerHTML=
+
+"总价：¥"+total;
+
+
+
+}
+
+
+
+
+
+
+
+function changeQuantity(id,num){
+
+
+
+let item=
+
+cart.find(
+
+x=>x.id==id
+
+);
+
+
+
+if(item){
+
+
+item.quantity+=num;
+
+
+if(item.quantity<=0){
+
+
+item.quantity=1;
+
+
+}
+
+
+}
+
+
+
+saveCart();
+
+
+}
+
+
+
+
+
+
+
+function removeCart(id){
+
+
+
+cart=
+
+cart.filter(
+
+x=>x.id!=id
+
+);
+
+
+
+saveCart();
+
+
+
+}
+
+
+
+
+
+
+
+function saveCart(){
+
+
+
+localStorage.setItem(
+
+"cart",
+
+JSON.stringify(cart)
+
+);
+
+
+
+location.reload();
+
+
+}
+
+
+
+
+
+loadCart();
+
+
+
 </script>
 
 
 
-
-
-
-
 </body>
-
 
 </html>
