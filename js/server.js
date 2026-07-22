@@ -1,8 +1,11 @@
-const express = require("express");
+require("dotenv").config();
 
-const cors = require("cors");
 
-const Stripe = require("stripe");
+const express=require("express");
+
+const cors=require("cors");
+
+const Stripe=require("stripe");
 
 const {
 createClient
@@ -10,17 +13,19 @@ createClient
 
 
 
-const app = express();
+const app=express();
 
 
 
-app.use(cors());
+app.use(
+cors()
+);
 
 
 
 const stripe =
 Stripe(
-process.env.STRIPE_KEY
+process.env.STRIPE_SECRET_KEY
 );
 
 
@@ -37,21 +42,73 @@ process.env.SUPABASE_KEY
 
 
 
+
 // 创建支付
 
 app.post(
 "/create-payment",
+
 express.json(),
+
 async(req,res)=>{
+
+
+
+try{
+
+
+const {
+orderId
+}=req.body;
+
+
+
+
+
+// 查询订单
+
+
+const {data:order,error}=await supabase
+.from("orders")
+.select("*")
+.eq(
+"id",
+orderId
+)
+.single();
+
+
+
+
+
+if(error){
+
+return res.json({
+
+error:"订单不存在"
+
+});
+
+}
+
+
+
+
 
 
 const session =
 await stripe.checkout.sessions.create({
 
 
+
 payment_method_types:[
+
 "card"
+
 ],
+
+
+
 
 
 line_items:[
@@ -60,24 +117,36 @@ line_items:[
 
 price_data:{
 
+
 currency:"usd",
+
 
 
 product_data:{
 
-name:req.body.product
+
+name:
+order.product_name
+
 
 },
+
 
 
 unit_amount:
-req.body.amount*100
+
+Number(order.price)*100
+
 
 
 },
 
 
-quantity:1
+
+quantity:
+
+order.quantity || 1
+
 
 
 }
@@ -85,17 +154,43 @@ quantity:1
 ],
 
 
+
+
+
 mode:"payment",
+
+
+
+
+
+
+metadata:{
+
+
+order_id:
+
+order.id
+
+
+},
+
+
+
+
 
 
 
 success_url:
 
-"https://mid8568.github.io/baijiu-shop/payment-success.html?session_id={CHECKOUT_SESSION_ID}",
+
+"https://mid8568.github.io/baijiu-shop/payment-success.html?order="+order.id,
+
+
 
 
 
 cancel_url:
+
 
 "https://mid8568.github.io/baijiu-shop/cart.html"
 
@@ -105,15 +200,37 @@ cancel_url:
 
 
 
+
+
+
 res.json({
 
-url:session.url
+url:
+session.url
 
 });
 
 
 
+
+
+}catch(err){
+
+
+res.json({
+
+error:
+err.message
+
 });
+
+
+}
+
+
+
+});
+
 
 
 
@@ -124,26 +241,43 @@ url:session.url
 
 // Stripe webhook
 
+
 app.post(
+
 "/webhook",
 
 express.raw({
+
 type:"application/json"
+
 }),
 
 async(req,res)=>{
+
+
+
 
 
 const event=req.body;
 
 
 
-if(event.type==="checkout.session.completed"){
+
+
+if(
+
+event.type ===
+
+"checkout.session.completed"
+
+){
 
 
 
-const session=
+const session =
 event.data.object;
+
+
 
 
 
@@ -152,11 +286,15 @@ session.metadata.order_id;
 
 
 
+
+
 await supabase
 .from("orders")
 .update({
 
+
 status:"已付款",
+
 
 paid_at:
 new Date()
@@ -164,13 +302,19 @@ new Date()
 
 })
 .eq(
+
 "id",
+
 orderId
+
 );
 
 
 
 }
+
+
+
 
 
 
@@ -181,7 +325,11 @@ received:true
 });
 
 
+
 });
+
+
+
 
 
 
@@ -194,10 +342,12 @@ app.listen(
 
 ()=>{
 
+
 console.log(
+
 "payment server running"
-);
-
-}
 
 );
+
+
+});
