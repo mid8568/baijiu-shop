@@ -1,85 +1,72 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-
-<head>
-
-<meta charset="UTF-8">
-
-<title>白酒商城后台</title>
-
-<link rel="stylesheet" href="css/style.css">
-
-</head>
+const SUPABASE_URL =
+"https://ukxxmxnubxjezkwbbxdr.supabase.co";
 
 
-<body>
+const SUPABASE_KEY =
+"sb_publishable_2IFHfms3ombozpvZCvaeEg_2VZ2z5hJ";
 
 
-<h1 style="text-align:center;margin:40px;">
-🍶 白酒商城管理后台
-</h1>
+const client = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
 
 
 
-<div class="container">
+async function addProduct(){
 
 
-<h2>
-添加白酒
-</h2>
+    const product={
+
+        name:
+        document.getElementById("name").value,
 
 
-<input id="name" placeholder="白酒名称">
+        price:
+        Number(
+        document.getElementById("price").value
+        ),
 
 
-<input id="price" placeholder="价格">
+        image:
+        document.getElementById("image").value,
 
 
-<input id="image" placeholder="图片地址">
+        description:
+        document.getElementById("description").value,
 
 
-<textarea id="description"
-placeholder="商品介绍">
-</textarea>
+        stock:
+        Number(
+        document.getElementById("stock").value
+        )
 
-
-<input id="stock"
-placeholder="库存">
-
-
-<button onclick="addProduct()">
-
-添加商品
-
-</button>
-
-
-</div>
+    };
 
 
 
-<div class="container">
-
-
-<h2>
-商品列表
-</h2>
-
-
-<div id="list">
-
-</div>
-
-
-</div>
+    const {error}=await client
+    .from("products")
+    .insert(product);
 
 
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    if(error){
 
-<script src="js/admin.js"></script>
+        alert(
+        "添加失败:"
+        +error.message
+        );
+
+        return;
+
+    }
 
 
-</body>
+    alert("白酒添加成功");
 
-</html>
+
+    location.reload();
+
+
+}
