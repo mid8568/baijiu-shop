@@ -31,7 +31,31 @@
 
 
 
+
+<header>
+
+
+<div class="logo">
+
+🍶 国韵白酒
+
+</div>
+
+
+
+</header>
+
+
+
+
+
+
+
+
+
 <div class="container">
+
+
 
 
 
@@ -40,6 +64,7 @@
 🎉 支付成功
 
 </h1>
+
 
 
 
@@ -53,11 +78,20 @@
 
 
 
-<p id="order-info">
 
-正在获取订单信息...
+<div id="order-info">
 
-</p>
+
+正在查询订单...
+
+
+</div>
+
+
+
+
+
+<br>
 
 
 
@@ -68,6 +102,7 @@
 查看我的订单
 
 </a>
+
 
 
 
@@ -88,16 +123,43 @@
 
 
 
+
+
 </div>
 
 
 
 
 
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+
 <script>
 
 
-// 获取订单编号
+const SUPABASE_URL =
+"https://ukxxmxnubxjezkwbbxdr.supabase.co";
+
+
+const SUPABASE_KEY =
+"sb_publishable_2IFHfms3ombozpvZCvaeEg_2VZ2z5hJ";
+
+
+
+const client =
+supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
+
+
+
+
 
 
 const params =
@@ -114,34 +176,134 @@ params.get("order");
 
 
 
-if(orderId){
+
+
+async function loadOrder(){
+
+
+
+if(!orderId){
 
 
 document.getElementById(
 "order-info"
-).innerHTML =
+).innerHTML=
 
-"订单编号："
-+
-orderId;
+"订单不存在";
 
 
-
-}else{
-
-
-document.getElementById(
-"order-info"
-).innerHTML =
-
-"订单已生成";
+return;
 
 
 }
 
 
 
+
+
+
+
+const {data,error}=await client
+.from("orders")
+.select("*")
+.eq(
+"id",
+orderId
+)
+.single();
+
+
+
+
+
+
+
+if(error){
+
+
+document.getElementById(
+"order-info"
+).innerHTML=
+
+"订单查询失败";
+
+
+return;
+
+
+}
+
+
+
+
+
+
+
+
+document.getElementById(
+"order-info"
+).innerHTML=
+
+`
+
+<h3>
+
+订单编号：
+
+${data.id}
+
+</h3>
+
+
+
+<p>
+
+商品：
+
+${data.product_name}
+
+</p>
+
+
+
+
+<p>
+
+金额：
+
+¥${data.price}
+
+</p>
+
+
+
+
+<p>
+
+订单状态：
+
+${data.status || "处理中"}
+
+</p>
+
+
+`;
+
+
+
+
+
+}
+
+
+
+loadOrder();
+
+
+
 </script>
+
+
 
 
 
