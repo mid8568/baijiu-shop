@@ -1,46 +1,19 @@
 <!DOCTYPE html>
-
 <html>
+
 
 <head>
 
+
 <meta charset="UTF-8">
 
-<title>购物车</title>
+
+<title>
+购物车
+</title>
 
 
-<style>
-
-
-.card{
-
-border:1px solid #ddd;
-
-padding:20px;
-
-margin:15px;
-
-width:300px;
-
-}
-
-
-img{
-
-width:150px;
-
-}
-
-
-
-button{
-
-padding:8px 15px;
-
-}
-
-
-</style>
+<link rel="stylesheet" href="css/style.css">
 
 
 </head>
@@ -51,15 +24,9 @@ padding:8px 15px;
 
 
 
-<h1>我的购物车</h1>
-
-
-
-<div id="cart-list"></div>
-
-
-
-<h2 id="total"></h2>
+<h1>
+我的购物车
+</h1>
 
 
 
@@ -68,6 +35,17 @@ padding:8px 15px;
 继续购物
 
 </a>
+
+
+<hr>
+
+
+<div id="cart-list"></div>
+
+
+
+<h2 id="total"></h2>
+
 
 
 
@@ -83,12 +61,15 @@ const SUPABASE_URL =
 "https://ukxxmxnubxjezkwbbxdr.supabase.co";
 
 
+
 const SUPABASE_KEY =
 "sb_publishable_2IFHfms3ombozpvZCvaeEg_2VZ2z5hJ";
 
 
 
+
 const client =
+
 supabase.createClient(
 
 SUPABASE_URL,
@@ -102,6 +83,7 @@ SUPABASE_KEY
 
 
 let cart =
+
 JSON.parse(
 
 localStorage.getItem("cart")
@@ -112,6 +94,14 @@ localStorage.getItem("cart")
 
 );
 
+
+
+
+
+console.log(
+"当前购物车:",
+cart
+);
 
 
 
@@ -129,7 +119,11 @@ let total=0;
 
 
 
+
+
 for(let item of cart){
+
+
 
 
 
@@ -151,19 +145,29 @@ item.id
 
 
 
+
+
 if(error){
+
 
 console.log(error);
 
+
 continue;
+
 
 }
 
 
 
 
-let quantity =
+
+
+let qty =
+
 item.quantity || 1;
+
+
 
 
 
@@ -173,7 +177,9 @@ Number(data.price)
 
 *
 
-quantity;
+qty;
+
+
 
 
 
@@ -187,6 +193,7 @@ html+=`
 <img src="${data.image}">
 
 
+
 <h3>
 
 ${data.name}
@@ -197,7 +204,7 @@ ${data.name}
 
 <p>
 
-单价：
+价格：
 
 ¥${data.price}
 
@@ -209,14 +216,14 @@ ${data.name}
 
 数量：
 
-${quantity}
+${qty}
 
 </p>
 
 
 
 
-<button onclick="changeQuantity(${data.id},1)">
+<button onclick="changeQty(${data.id},1)">
 
 +
 
@@ -224,7 +231,7 @@ ${quantity}
 
 
 
-<button onclick="changeQuantity(${data.id},-1)">
+<button onclick="changeQty(${data.id},-1)">
 
 -
 
@@ -237,7 +244,6 @@ ${quantity}
 删除
 
 </button>
-
 
 
 </div>
@@ -253,13 +259,16 @@ ${quantity}
 
 
 
-if(html==""){
+
+
+if(html===""){
 
 
 html="<h2>购物车为空</h2>";
 
 
 }
+
 
 
 
@@ -281,6 +290,7 @@ document.getElementById(
 
 
 
+
 }
 
 
@@ -289,11 +299,13 @@ document.getElementById(
 
 
 
-function changeQuantity(id,num){
+
+
+function changeQty(id,num){
 
 
 
-let item=
+let item =
 
 cart.find(
 
@@ -306,20 +318,17 @@ x=>x.id==id
 if(item){
 
 
-item.quantity+=num;
+item.quantity += num;
 
 
-if(item.quantity<=0){
-
+if(item.quantity<1){
 
 item.quantity=1;
 
-
 }
 
 
 }
-
 
 
 saveCart();
@@ -333,11 +342,12 @@ saveCart();
 
 
 
+
 function removeCart(id){
 
 
 
-cart=
+cart =
 
 cart.filter(
 
@@ -350,8 +360,9 @@ x=>x.id!=id
 saveCart();
 
 
-
 }
+
+
 
 
 
@@ -382,6 +393,8 @@ location.reload();
 
 
 
+
+
 loadCart();
 
 
@@ -391,5 +404,6 @@ loadCart();
 
 
 </body>
+
 
 </html>
