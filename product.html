@@ -58,8 +58,6 @@
 
 
 
-
-
 <div class="container" id="product-detail">
 
 
@@ -69,6 +67,78 @@
 </div>
 
 
+
+
+
+<!-- 商品评价 -->
+
+<div class="container">
+
+
+<h2>
+商品评价
+</h2>
+
+
+
+<div id="reviews">
+
+加载评价中...
+
+</div>
+
+
+
+
+<textarea
+id="review-content"
+placeholder="请输入你的评价">
+
+</textarea>
+
+
+
+<select id="rating">
+
+
+<option value="5">
+⭐⭐⭐⭐⭐
+</option>
+
+
+<option value="4">
+⭐⭐⭐⭐
+</option>
+
+
+<option value="3">
+⭐⭐⭐
+</option>
+
+
+<option value="2">
+⭐⭐
+</option>
+
+
+<option value="1">
+⭐
+</option>
+
+
+</select>
+
+
+
+<button onclick="addReview()">
+
+发表评论
+
+</button>
+
+
+
+</div>
 
 
 
@@ -86,15 +156,8 @@
 
 
 
-
-
-<!-- Supabase -->
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-
-
-<!-- 商品详情逻辑 -->
 
 <script src="js/product.js"></script>
 
