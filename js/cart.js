@@ -290,80 +290,34 @@ return;
 
 const {data:userData}=await client.auth.getUser();
 
+const user=userData.user;
 
 
-const user =
-userData.user;
-
-
-
-
-
-
-
-for(let item of cart){
-
-
-
-const product =
-products.find(
-p=>p.id==item.id
-);
-
-
-
-await client
+const {data,error}=await client
 .from("orders")
 .insert({
 
+product_id:product.id,
 
+product_name:product.name,
 
-product_id:
-product.id,
+price:product.price,
 
+quantity:1,
 
+customer_name:name,
 
-product_name:
-product.name,
+phone:phone,
 
+address:address,
 
+user_id:user.id,
 
-price:
-product.price,
+status:"待付款"
 
-
-
-quantity:
-item.quantity || 1,
-
-
-
-customer_name:
-name,
-
-
-
-phone:
-phone,
-
-
-
-address:
-address,
-
-
-
-status:
-"待付款",
-
-
-
-user_id:
-user ? user.id:null
-
-
-
-});
+})
+.select()
+.single();
 
 
 
