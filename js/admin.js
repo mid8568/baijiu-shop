@@ -1,3 +1,30 @@
+// 检查管理员登录
+
+
+async function checkLogin(){
+
+
+const {data}=await client.auth.getSession();
+
+
+
+if(!data.session){
+
+
+location.href="admin-login.html";
+
+
+return;
+
+
+}
+
+
+}
+
+
+
+checkLogin();
 const SUPABASE_URL =
 "https://ukxxmxnubxjezkwbbxdr.supabase.co";
 
