@@ -11,39 +11,29 @@ const SUPABASE_KEY =
 "sb_publishable_2IFHfms3ombozpvZCvaeEg_2VZ2z5hJ";
 
 
-
 const client = supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
+SUPABASE_URL,
+SUPABASE_KEY
 );
 
-
-
-
-
-// =========================
-// 检查管理员登录
-// =========================
 
 
 async function checkLogin(){
 
 
-const {data}=await client.auth.getSession();
+const {data,error}=await client.auth.getSession();
+
+
+console.log("登录状态:",data.session);
 
 
 
 if(!data.session){
 
-
-location.href="admin-login.html";
-
-
-return;
-
+window.location.href =
+"admin-login.html";
 
 }
-
 
 
 }
