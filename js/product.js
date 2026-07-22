@@ -1,6 +1,6 @@
-const SUPABASE_URL = "你的Supabase地址";
+const SUPABASE_URL = "https://ukxxmxnubxjezkwbbxdr.supabase.co";
 
-const SUPABASE_KEY = "你的anon key";
+const SUPABASE_KEY = "sb_publishable_2IFHfms3ombozpvZCvaeEg_2VZ2z5hJ";
 
 
 const client = supabase.createClient(
