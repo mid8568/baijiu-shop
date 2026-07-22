@@ -1,11 +1,14 @@
-const SUPABASE_URL="https://ukxxmxnubxjezkwbbxdr.supabase.co";
+const SUPABASE_URL =
+"https://ukxxmxnubxjezkwbbxdr.supabase.co";
 
-const SUPABASE_KEY="sb_publishable_2IFHfms3ombozpvZCvaeEg_2VZ2z5hJ";
+
+const SUPABASE_KEY =
+"sb_publishable_2IFHfms3ombozpvZCvaeEg_2VZ2z5hJ";
 
 
-const client=supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
+const client = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
 );
 
 
@@ -13,124 +16,57 @@ SUPABASE_KEY
 async function addProduct(){
 
 
-let product={
+    const product={
 
-name:
-document.querySelector("#name").value,
-
-
-price:
-document.querySelector("#price").value,
+        name:
+        document.getElementById("name").value,
 
 
-image:
-document.querySelector("#image").value,
+        price:
+        Number(
+        document.getElementById("price").value
+        ),
 
 
-description:
-document.querySelector("#description").value,
+        image:
+        document.getElementById("image").value,
 
 
-stock:
-document.querySelector("#stock").value
-
-};
+        description:
+        document.getElementById("description").value,
 
 
+        stock:
+        Number(
+        document.getElementById("stock").value
+        )
 
-let {error}=await client
-.from("products")
-.insert(product);
+    };
 
 
 
-if(error){
-
-alert(error.message);
-
-}else{
-
-alert("添加成功");
-
-loadProducts();
-
-}
-
-
-}
+    const {error}=await client
+    .from("products")
+    .insert(product);
 
 
 
+    if(error){
+
+        alert(
+        "添加失败:"
+        +error.message
+        );
+
+        return;
+
+    }
 
 
-async function loadProducts(){
+    alert("白酒添加成功");
 
 
-let {data}=await client
-.from("products")
-.select("*");
-
-
-
-let box=document.querySelector("#list");
-
-
-box.innerHTML="";
-
-
-data.forEach(item=>{
-
-
-box.innerHTML+=`
-
-<div>
-
-<h3>
-${item.name}
-</h3>
-
-<p>
-价格：${item.price}
-</p>
-
-
-<button onclick="deleteProduct(${item.id})">
-
-删除
-
-</button>
-
-
-</div>
-
-<hr>
-
-`;
-
-});
+    location.reload();
 
 
 }
-
-
-
-
-
-async function deleteProduct(id){
-
-
-await client
-.from("products")
-.delete()
-.eq("id",id);
-
-
-
-loadProducts();
-
-
-}
-
-
-
-loadProducts();
