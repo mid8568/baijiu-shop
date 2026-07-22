@@ -149,11 +149,13 @@ ${data.stock}
 function addCart(productId){
 
 
-
-let cart = JSON.parse(
+let cart =
+JSON.parse(
 
 localStorage.getItem("cart")
+
 ||
+
 "[]"
 
 );
@@ -168,7 +170,6 @@ x=>x.id==productId
 
 
 if(item){
-
 
 item.quantity++;
 
@@ -199,11 +200,13 @@ JSON.stringify(cart)
 
 
 
-alert("已加入购物车");
+alert(
+"已加入购物车"
+);
+
 
 
 }
-
 
 
 
