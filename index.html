@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script src="js/app.js"></script>
 <head>
+
 <meta charset="UTF-8">
 
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>国韵白酒商城</title>
+
+<title>
+国韵白酒商城
+</title>
+
+
 <link rel="stylesheet" href="css/style.css">
+
+
 </head>
+
 
 
 <body>
@@ -18,30 +25,40 @@
 
 <header>
 
+
 <div class="logo">
+
 🍶 国韵白酒
+
 </div>
 
 
+
 <nav>
+
 
 <a href="#">
 首页
 </a>
 
+
 <a href="#">
 酱香白酒
 </a>
+
 
 <a href="#">
 浓香白酒
 </a>
 
+
 <a href="#">
 收藏酒
 </a>
 
+
 </nav>
+
 
 
 <div class="cart">
@@ -51,7 +68,9 @@
 </div>
 
 
+
 </header>
+
 
 
 
@@ -62,24 +81,36 @@
 
 <div>
 
+
 <h1>
+
 中国白酒 · 国酒之韵
+
 </h1>
 
+
+
 <p>
+
 精选名酒 | 原浆酿造 | 品质保证
+
 </p>
 
 
+
 <a class="btn">
+
 立即购买
+
 </a>
 
 
 </div>
 
 
+
 </section>
+
 
 
 
@@ -87,136 +118,25 @@
 
 
 <h2 class="title">
+
 热门白酒
+
 </h2>
 
 
 
-<section class="products" id="product-list">
-
-</section>
 
 
+<!-- Supabase商品自动加载区域 -->
 
-<div class="card">
-
-<img src="https://images.unsplash.com/photo-1608889175123-8ee362201f81">
-
-
-<h3>
-53度酱香白酒
-<h3>
-<a href="product.html">
-53度酱香白酒
-</a>
-</h3>
-
-<p class="price">
-¥1299
-</p>
-
-<a href="product.html">
-<button>
-查看商品
-</button>
-</a>
-
-</div>
-
-
-
-
-
-<div class="card">
-
-<img src="https://images.unsplash.com/photo-1569529465841-dfecdab7503b">
-
-
-<h3>
-珍藏级白酒
-</h3>
-
-<p class="desc">
-年份窖藏 收藏佳品
-</p>
-
-
-<p class="price">
-¥899
-</p>
-
-
-<button>
-加入购物车
-</button>
-
-</div>
-
-
-
-
-
-
-<div class="card">
-
-<img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b">
-
-
-<h3>
-浓香型白酒
-</h3>
-
-<p class="desc">
-绵柔入口 回味悠长
-</p>
-
-
-<p class="price">
-¥599
-</p>
-
-
-<button>
-加入购物车
-</button>
-
-
-</div>
-
-
-
-
-
-<div class="card">
-
-<img src="https://images.unsplash.com/photo-1527281400683-1aae777175f8">
-
-
-<h3>
-限量收藏酒
-</h3>
-
-
-<p class="desc">
-大师酿造 限量发行
-</p>
-
-
-<p class="price">
-¥1999
-</p>
-
-
-<button>
-加入购物车
-</button>
-
-
-</div>
-
+<section 
+class="products" 
+id="product-list">
 
 
 </section>
+
+
 
 
 
@@ -227,8 +147,12 @@
 
 
 <h2>
+
 国韵白酒品牌理念
+
 </h2>
+
+
 
 <p>
 
@@ -240,7 +164,9 @@
 </p>
 
 
+
 </section>
+
 
 
 
@@ -249,33 +175,57 @@
 
 <footer>
 
+
 © 2026 国韵白酒商城
+
 
 </footer>
 
 
 
+
+
+
 <script>
 
-let count=0;
 
-document.querySelectorAll("button")
-.forEach(btn=>{
+let count = 0;
 
-btn.onclick=function(){
+
+
+document.querySelector(".cart")
+.onclick=function(){
+
 
 count++;
 
-document.querySelector(".cart")
-.innerHTML="购物车 "+count;
+
+this.innerHTML =
+"购物车 " + count;
+
 
 }
 
-});
+
 
 </script>
 
 
 
+
+
+<!-- Supabase -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+
+<!-- 商品加载 -->
+
+<script src="js/app.js"></script>
+
+
+
 </body>
+
 </html>
