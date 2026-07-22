@@ -1,1 +1,24 @@
+const SUPABASE_URL="你的项目URL";
 
+const SUPABASE_KEY="你的anon key";
+
+
+const client = supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
+
+async function loadProducts(){
+
+let {data,error}=await client
+.from("products")
+.select("*");
+
+
+console.log(data);
+
+}
+
+
+loadProducts();
