@@ -14,12 +14,19 @@ SUPABASE_KEY
 
 
 
+
 let cart =
 JSON.parse(
+
 localStorage.getItem("cart")
+
 ||
+
 "[]"
+
 );
+
+
 
 
 
@@ -41,6 +48,7 @@ document.getElementById(
 
 
 
+
 let address =
 document.getElementById(
 "address"
@@ -50,9 +58,11 @@ document.getElementById(
 
 
 
-if(!customer ||
+if(
+!customer ||
 !phone ||
-!address){
+!address
+){
 
 
 alert(
@@ -62,7 +72,9 @@ alert(
 
 return;
 
+
 }
+
 
 
 
@@ -76,8 +88,11 @@ await client.auth.getUser();
 
 
 
+
 const user =
 userData.user;
+
+
 
 
 
@@ -106,7 +121,8 @@ for(let item of cart){
 
 
 const {
-data:product
+data:product,
+error
 }
 =
 await client
@@ -126,13 +142,23 @@ item.id
 
 
 
+if(error){
+
+console.log(error);
+
+continue;
+
+}
+
+
+
+
+
 await client
 
 .from("orders")
 
 .insert({
-
-
 
 product_id:
 product.id,
@@ -155,8 +181,6 @@ customer,
 
 
 phone:
-
-
 phone,
 
 
@@ -172,13 +196,11 @@ status:
 "待付款"
 
 
-
 });
 
 
 
 }
-
 
 
 
@@ -189,8 +211,9 @@ localStorage.removeItem(
 
 
 
+
 alert(
-"订单创建成功"
+"订单提交成功"
 );
 
 
