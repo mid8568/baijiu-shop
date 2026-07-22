@@ -5,7 +5,9 @@
 
 <head>
 
+
 <meta charset="UTF-8">
+
 
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
@@ -13,6 +15,7 @@
 <title>
 购物车
 </title>
+
 
 
 <link rel="stylesheet" href="css/style.css">
@@ -28,6 +31,7 @@
 
 <header>
 
+
 <div class="logo">
 
 🍶 国韵白酒
@@ -35,14 +39,29 @@
 </div>
 
 
+
+
 <nav>
 
+
 <a href="index.html">
+
 首页
+
 </a>
 
 
+
+<a href="my-orders.html">
+
+我的订单
+
+</a>
+
+
+
 </nav>
+
 
 
 </header>
@@ -51,12 +70,23 @@
 
 
 
+
+
+
+
 <div class="container">
 
 
+
 <h1>
-我的购物车
+
+🛒 我的购物车
+
 </h1>
+
+
+
+
 
 
 
@@ -68,6 +98,11 @@
 
 
 
+
+
+
+
+
 <h2 id="total">
 
 总价：¥0
@@ -76,28 +111,81 @@
 
 
 
+
+
+
+
+<button onclick="clearCart()">
+
+清空购物车
+
+</button>
+
+
+
+
+
+
+
+
+<hr>
+
+
+
+
+
+
+
 <h2>
+
 收货信息
+
 </h2>
 
 
 
-<input 
+
+
+
+
+
+<input
+
 id="customer"
-placeholder="姓名">
+
+placeholder="收货人姓名"
+
+>
 
 
 
-<input 
+
+
+
+<input
+
 id="phone"
-placeholder="手机号">
+
+placeholder="手机号"
+
+>
+
+
+
+
 
 
 
 <textarea
+
 id="address"
-placeholder="收货地址">
+
+placeholder="详细收货地址">
+
 </textarea>
+
+
+
 
 
 
@@ -110,7 +198,45 @@ placeholder="收货地址">
 
 
 
+
+
+<br><br>
+
+
+
+
+
+<a href="index.html">
+
+继续购物
+
+</a>
+
+
+
+
+
 </div>
+
+
+
+
+
+
+
+
+
+<footer>
+
+
+© 2026 国韵白酒商城
+
+
+</footer>
+
+
+
+
 
 
 
@@ -119,7 +245,42 @@ placeholder="收货地址">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
+
 <script src="js/cart.js"></script>
+
+
+
+
+
+
+
+<script>
+
+
+function clearCart(){
+
+
+
+localStorage.removeItem(
+"cart"
+);
+
+
+
+location.reload();
+
+
+
+}
+
+
+
+</script>
+
+
+
+
+
 
 
 </body>
