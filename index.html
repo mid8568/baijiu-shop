@@ -371,15 +371,21 @@ localStorage.getItem("cart")
 
 );
 
+let count =
+cart.reduce(
+(sum,item)=>
+sum+item.quantity,
+0
+);
 
 
 document.getElementById(
 "cart-count"
-).innerHTML =
+).innerHTML=
 
 "购物车 "
 +
-cart.length;
+count;
 
 
 
