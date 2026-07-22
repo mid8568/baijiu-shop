@@ -6,6 +6,7 @@ const SUPABASE_KEY =
 "sb_publishable_2IFHfms3ombozpvZCvaeEg_2VZ2z5hJ";
 
 
+
 const client =
 supabase.createClient(
 SUPABASE_URL,
@@ -15,21 +16,56 @@ SUPABASE_KEY
 
 
 
-// 注册
+
+
+
+
+// =================
+// 用户注册
+// =================
+
 
 async function registerUser(){
 
 
-let email =
-document.getElementById("email").value;
+
+const email =
+document.getElementById(
+"email"
+).value.trim();
 
 
-let password =
-document.getElementById("password").value;
+
+const password =
+document.getElementById(
+"password"
+).value.trim();
 
 
 
-const {error}=await client.auth.signUp({
+
+
+
+if(!email || !password){
+
+
+alert(
+"请输入邮箱和密码"
+);
+
+
+return;
+
+
+}
+
+
+
+
+
+
+
+const {data,error}=await client.auth.signUp({
 
 email,
 
@@ -39,38 +75,108 @@ password
 
 
 
+
+
+
+
 if(error){
 
-alert(error.message);
+
+alert(
+"注册失败:"
++
+error.message
+);
+
 
 return;
 
-}
-
-
-
-alert("注册成功，请登录");
 
 }
 
 
 
 
-// 登录
+
+
+
+alert(
+"注册成功"
+);
+
+
+
+
+
+location.href =
+"user-login.html";
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+// =================
+// 用户登录
+// =================
+
 
 async function loginUser(){
 
 
-let email =
-document.getElementById("email").value;
-
-
-let password =
-document.getElementById("password").value;
 
 
 
-const {error}=await client.auth.signInWithPassword({
+const email =
+document.getElementById(
+"email"
+).value.trim();
+
+
+
+
+
+const password =
+document.getElementById(
+"password"
+).value.trim();
+
+
+
+
+
+
+
+if(!email || !password){
+
+
+alert(
+"请输入邮箱和密码"
+);
+
+
+return;
+
+
+}
+
+
+
+
+
+
+
+const {data,error}=await client.auth
+.signInWithPassword({
 
 email,
 
@@ -80,20 +186,110 @@ password
 
 
 
+
+
+
 if(error){
 
-alert(error.message);
+
+alert(
+
+"登录失败:"
++
+error.message
+
+);
+
 
 return;
+
 
 }
 
 
 
-alert("登录成功");
 
 
-location.href="index.html";
+
+console.log(
+
+"当前用户:",
+data.user
+
+);
+
+
+
+
+
+
+alert(
+"登录成功"
+);
+
+
+
+
+
+location.href =
+"index.html";
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+// =================
+// 获取当前用户
+// =================
+
+
+async function getUser(){
+
+
+
+const {data}=await client.auth.getUser();
+
+
+
+return data.user;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// =================
+// 退出登录
+// =================
+
+
+async function logoutUser(){
+
+
+
+await client.auth.signOut();
+
+
+
+location.href =
+"index.html";
+
 
 
 }
