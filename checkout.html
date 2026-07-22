@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="zh-CN">
+
 
 <head>
 
 <meta charset="UTF-8">
+
 
 <title>
 订单结算
@@ -17,7 +19,42 @@
 </head>
 
 
+
 <body>
+
+
+<header>
+
+<div class="logo">
+
+🍶 国韵白酒
+
+</div>
+
+
+<nav>
+
+<a href="index.html">
+
+首页
+
+</a>
+
+
+<a href="cart.html">
+
+购物车
+
+</a>
+
+
+</nav>
+
+
+</header>
+
+
+
 
 
 <div class="container">
@@ -27,35 +64,52 @@
 
 
 <h1>
+
 填写收货信息
+
 </h1>
 
 
 
+
 <input
+
 id="customer"
-placeholder="姓名"
+
+placeholder="收货姓名"
+
 >
 
 
 
 <input
+
 id="phone"
-placeholder="手机号"
+
+placeholder="联系电话"
+
 >
+
 
 
 
 <textarea
+
 id="address"
-placeholder="收货地址">
+
+placeholder="详细地址">
+
 </textarea>
 
 
 
-<h2 id="order-total">
+
+
+<h2 id="total-price">
 
 </h2>
+
+
 
 
 
@@ -66,10 +120,13 @@ placeholder="收货地址">
 </button>
 
 
+
 </div>
 
 
 </div>
+
+
 
 
 
@@ -78,6 +135,7 @@ placeholder="收货地址">
 
 
 <script src="js/checkout.js"></script>
+
 
 
 </body>
