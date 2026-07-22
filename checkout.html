@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>
+订单结算
+</title>
+
+
+<link rel="stylesheet" href="css/style.css">
+
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<div>
+
+
+<h1>
+填写收货信息
+</h1>
+
+
+
+<input
+id="customer"
+placeholder="姓名"
+>
+
+
+
+<input
+id="phone"
+placeholder="手机号"
+>
+
+
+
+<textarea
+id="address"
+placeholder="收货地址">
+</textarea>
+
+
+
+<h2 id="order-total">
+
+</h2>
+
+
+
+<button onclick="submitOrder()">
+
+提交订单
+
+</button>
+
+
+</div>
+
+
+</div>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<script src="js/checkout.js"></script>
+
+
+</body>
+
+
+</html>
