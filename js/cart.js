@@ -14,6 +14,8 @@ SUPABASE_KEY
 
 
 
+
+
 let cart =
 JSON.parse(
 localStorage.getItem("cart")
@@ -27,12 +29,26 @@ let products=[];
 
 
 
+
+
+
+
+
+// 加载购物车
+
+
 async function loadCart(){
 
 
 let html="";
 
+
 let total=0;
+
+
+
+products=[];
+
 
 
 
@@ -43,8 +59,12 @@ for(let item of cart){
 const {data,error}=await client
 .from("products")
 .select("*")
-.eq("id",item.id)
+.eq(
+"id",
+item.id
+)
 .single();
+
 
 
 
@@ -53,20 +73,37 @@ continue;
 
 
 
+
 products.push(data);
 
 
 
-total += Number(data.price);
+
+
+let quantity =
+item.quantity || 1;
+
+
+
+
+total +=
+Number(data.price)
+*
+quantity;
+
+
 
 
 
 html += `
 
+
 <div class="card">
 
 
+
 <img src="${data.image}">
+
 
 
 <h3>
@@ -77,11 +114,25 @@ ${data.name}
 
 
 
-<p class="price">
+<p>
+
+单价：
 
 ¥${data.price}
 
 </p>
+
+
+
+
+<p>
+
+数量：
+
+${quantity}
+
+</p>
+
 
 
 
@@ -92,11 +143,30 @@ ${data.name}
 </button>
 
 
+
+
 </div>
+
 
 `;
 
+
+
 }
+
+
+
+
+
+if(html===""){
+
+
+html=
+"<h3>购物车为空</h3>";
+
+
+}
+
 
 
 
@@ -109,7 +179,10 @@ document.getElementById(
 document.getElementById(
 "total"
 ).innerHTML=
-"总价：¥"+total;
+
+"总价：¥"
++
+total;
 
 
 
@@ -118,7 +191,14 @@ document.getElementById(
 
 
 
-// 删除购物车
+
+
+
+
+
+
+// 删除商品
+
 
 function removeCart(id){
 
@@ -126,14 +206,18 @@ function removeCart(id){
 
 cart =
 cart.filter(
-item=>item.id!=id
+item=>
+item.id!=id
 );
 
 
 
 localStorage.setItem(
+
 "cart",
+
 JSON.stringify(cart)
+
 );
 
 
@@ -148,36 +232,83 @@ location.reload();
 
 
 
+
+
+
+
 // 提交订单
+
 
 async function submitOrder(){
 
 
 
 let name =
-document.getElementById("customer").value;
+document.getElementById(
+"customer"
+).value;
+
 
 
 let phone =
-document.getElementById("phone").value;
+document.getElementById(
+"phone"
+).value;
+
 
 
 let address =
-document.getElementById("address").value;
+document.getElementById(
+"address"
+).value;
 
 
 
-if(!name||!phone||!address){
 
-alert("请填写完整信息");
+
+
+if(!name || !phone || !address){
+
+
+
+alert(
+"请填写完整信息"
+);
+
 
 return;
+
 
 }
 
 
 
-for(let product of products){
+
+
+
+
+
+const {data:userData}=await client.auth.getUser();
+
+
+
+const user =
+userData.user;
+
+
+
+
+
+
+
+for(let item of cart){
+
+
+
+const product =
+products.find(
+p=>p.id==item.id
+);
 
 
 
@@ -185,40 +316,89 @@ await client
 .from("orders")
 .insert({
 
-product_id:product.id,
 
-product_name:product.name,
 
-price:product.price,
+product_id:
+product.id,
 
-quantity:1,
 
-customer_name:name,
 
-phone:phone,
+product_name:
+product.name,
 
-address:address
+
+
+price:
+product.price,
+
+
+
+quantity:
+item.quantity || 1,
+
+
+
+customer_name:
+name,
+
+
+
+phone:
+phone,
+
+
+
+address:
+address,
+
+
+
+status:
+"待付款",
+
+
+
+user_id:
+user ? user.id:null
+
+
 
 });
 
 
+
+}
+
+
+
+
+
+alert(
+"订单提交成功"
+);
+
+
+
+
+localStorage.removeItem(
+"cart"
+);
+
+
+
+
+
+location.href=
+"payment-success.html";
+
+
+
 }
 
 
 
-alert("订单提交成功");
 
 
-
-localStorage.removeItem("cart");
-
-
-
-location.href="index.html";
-
-
-
-}
 
 
 
