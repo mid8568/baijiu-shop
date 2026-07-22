@@ -1,1 +1,93 @@
+<!DOCTYPE html>
 
+<html lang="zh-CN">
+
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>
+购物车
+</title>
+
+
+<link rel="stylesheet" href="css/style.css">
+
+
+</head>
+
+
+
+<body>
+
+
+<header>
+
+<div class="logo">
+🍶 国韵白酒
+</div>
+
+</header>
+
+
+
+<div class="container">
+
+
+<h1>
+确认订单
+</h1>
+
+
+
+<div id="cart-list">
+
+加载中...
+
+</div>
+
+
+
+<h2>
+收货信息
+</h2>
+
+
+
+<input id="customer"
+placeholder="姓名">
+
+
+
+<input id="phone"
+placeholder="手机号">
+
+
+
+<input id="address"
+placeholder="收货地址">
+
+
+
+<button onclick="submitOrder()">
+
+提交订单
+
+</button>
+
+
+
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<script src="js/cart.js"></script>
+
+
+</body>
+
+</html>
