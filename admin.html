@@ -1,72 +1,172 @@
-const SUPABASE_URL =
-"https://ukxxmxnubxjezkwbbxdr.supabase.co";
+<!DOCTYPE html>
+
+<html lang="zh-CN">
 
 
-const SUPABASE_KEY =
-"sb_publishable_2IFHfms3ombozpvZCvaeEg_2VZ2z5hJ";
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 
-const client = supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
+<title>
+国韵白酒后台管理
+</title>
 
 
-
-async function addProduct(){
-
-
-    const product={
-
-        name:
-        document.getElementById("name").value,
+<link rel="stylesheet" href="css/style.css">
 
 
-        price:
-        Number(
-        document.getElementById("price").value
-        ),
-
-
-        image:
-        document.getElementById("image").value,
-
-
-        description:
-        document.getElementById("description").value,
-
-
-        stock:
-        Number(
-        document.getElementById("stock").value
-        )
-
-    };
+</head>
 
 
 
-    const {error}=await client
-    .from("products")
-    .insert(product);
+<body>
 
 
 
-    if(error){
-
-        alert(
-        "添加失败:"
-        +error.message
-        );
-
-        return;
-
-    }
+<header>
 
 
-    alert("白酒添加成功");
+<div class="logo">
+
+🍶 国韵白酒后台
+
+</div>
 
 
-    location.reload();
+</header>
 
 
-}
+
+
+
+
+<div class="container">
+
+
+
+<h1>
+
+添加白酒商品
+
+</h1>
+
+
+
+
+<input 
+id="name"
+type="text"
+placeholder="白酒名称">
+
+
+
+
+
+<input 
+id="price"
+type="number"
+placeholder="价格">
+
+
+
+
+
+<input 
+id="image"
+type="text"
+placeholder="图片地址">
+
+
+
+
+
+<textarea
+
+id="description"
+
+placeholder="商品介绍">
+
+</textarea>
+
+
+
+
+
+<input
+
+id="stock"
+
+type="number"
+
+placeholder="库存数量">
+
+
+
+
+
+
+<button onclick="addProduct()">
+
+添加商品
+
+</button>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="container">
+
+
+<h2>
+
+操作说明
+
+</h2>
+
+
+<p>
+
+填写商品信息后点击添加，
+商品会保存到 Supabase 数据库。
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- Supabase SDK -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+
+<!-- 后台功能 -->
+
+<script src="js/admin.js"></script>
+
+
+
+
+</body>
+
+
+</html>
