@@ -1,20 +1,35 @@
-const SUPABASE_URL = "https://ukxxmxnubxjezkwbbxdr.supabase.co";
+const SUPABASE_URL =
+"https://ukxxmxnubxjezkwbbxdr.supabase.co";
 
-const SUPABASE_KEY = "sb_publishable_2IFHfms3ombozpvZCvaeEg_2VZ2z5hJ";
+
+const SUPABASE_KEY =
+"sb_publishable_2IFHfms3ombozpvZCvaeEg_2VZ2z5hJ";
 
 
 const client = supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
+SUPABASE_URL,
+SUPABASE_KEY
 );
 
 
-async function getProduct(){
 
 
-let id = new URLSearchParams(
+// 获取商品ID
+
+const params =
+new URLSearchParams(
 window.location.search
-).get("id");
+);
+
+
+const id =
+params.get("id");
+
+
+
+
+
+async function loadProduct(){
 
 
 
@@ -26,33 +41,78 @@ const {data,error}=await client
 
 
 
+
 if(error){
 
-console.log(error);
+document.getElementById(
+"product-detail"
+).innerHTML=
+"商品不存在";
+
+
 return;
 
 }
 
 
 
-document.querySelector("#name")
-.innerHTML=data.name;
+
+document.getElementById(
+"product-detail"
+).innerHTML=
+`
+
+<img src="${data.image}">
 
 
-document.querySelector("#image")
-.src=data.image;
+<div>
 
 
-document.querySelector("#price")
-.innerHTML="¥"+data.price;
+<h1>
+
+${data.name}
+
+</h1>
 
 
-document.querySelector("#desc")
-.innerHTML=data.description;
+<p class="price">
+
+¥${data.price}
+
+</p>
+
+
+<p>
+
+${data.description}
+
+</p>
+
+
+<p>
+
+库存：
+${data.stock}
+
+</p>
+
+
+<button>
+
+立即购买
+
+</button>
+
+
+</div>
+
+
+`;
+
 
 
 }
 
 
 
-getProduct();
+loadProduct();
