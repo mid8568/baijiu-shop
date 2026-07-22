@@ -1,66 +1,107 @@
-
 <!DOCTYPE html>
+
 <html lang="zh-CN">
+
 
 <head>
 
 <meta charset="UTF-8">
 
-<title>白酒商品详情</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+
+<title>
+白酒商品详情
+</title>
+
+
 <link rel="stylesheet" href="css/style.css">
 
 
-
 </head>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script src="js/product.js"></script>
+
 
 <body>
 
 
-<div class="container">
+
+<header>
 
 
-<img src="https://images.unsplash.com/photo-1569529465841-dfecdab7503b">
+<div class="logo">
+
+🍶 国韵白酒
+
+</div>
 
 
-<div class="container">
+
+<nav>
+
+<a href="index.html">
+首页
+</a>
 
 
-<img id="image">
+<a href="cart.html">
+购物车
+</a>
 
 
-<div>
+</nav>
 
 
-<h1 id="name"></h1>
+</header>
 
 
-<p id="desc"></p>
 
 
-<p class="price" id="price"></p>
 
 
-<button>
-立即购买
-</button>
+
+<div class="container" id="product-detail">
+
+
+加载商品中...
 
 
 </div>
 
 
-</div>
 
 
-</div>
 
 
-</div>
+
+<footer>
+
+
+© 2026 国韵白酒商城
+
+
+</footer>
+
+
+
+
+
+
+
+<!-- Supabase -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+
+<!-- 商品详情逻辑 -->
+
+<script src="js/product.js"></script>
+
 
 
 
 </body>
+
 
 </html>
