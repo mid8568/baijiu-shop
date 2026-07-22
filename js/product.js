@@ -24,6 +24,18 @@ new URLSearchParams(
 const id =
 params.get("id");
 
+if(!id){
+
+document.getElementById(
+"product-detail"
+).innerHTML =
+"商品ID不存在";
+
+throw new Error(
+"缺少商品id"
+);
+
+}
 
 // 保存当前商品ID
 
