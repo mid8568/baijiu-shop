@@ -6,107 +6,114 @@ const SUPABASE_KEY =
 "sb_publishable_2IFHfms3ombozpvZCvaeEg_2VZ2z5hJ";
 
 
-const client = supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
+
+const client =
+supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
 );
+
+
 
 
 
 async function loadProducts(){
 
 
-    const {data,error}=await client
-    .from("products")
-    .select("*")
-    .order("id",{ascending:true});
+
+const {data,error}=await client
+.from("products")
+.select("*")
+.order(
+"id",
+{
+ascending:false
+}
+);
 
 
 
-    if(error){
+if(error){
 
-        console.log("读取商品失败:",error);
+console.log(error);
 
-        return;
+return;
 
-    }
-
-
-
-    const box=document.getElementById(
-        "product-list"
-    );
+}
 
 
 
-    if(!box){
-
-        console.log("没有找到商品区域");
-
-        return;
-
-    }
+let html="";
 
 
 
-    box.innerHTML="";
+data.forEach(item=>{
+
+
+html+=`
+
+<div class="card">
+
+
+<img src="${item.image}">
 
 
 
-    data.forEach(product=>{
+<h3>
 
+${item.name}
 
-        box.innerHTML += `
-
-
-        <div class="card">
-
-
-            <img src="${product.image}">
-
-
-            <h3>
-
-            ${product.name}
-
-            </h3>
-
-
-            <p class="desc">
-
-            ${product.description || ""}
-
-            </p>
-
-
-            <p class="price">
-
-            ¥${product.price}
-
-            </p>
+</h3>
 
 
 
-            <a href="product.html?id=${item.id}">
+<p class="desc">
 
-            <button>
+${item.description}
 
-             查看商品
-
-            </button>
-
-             </a>
-
-        </div>
+</p>
 
 
-        `;
+
+<p class="price">
+
+¥${item.price}
+
+</p>
 
 
-    });
+
+<a href="product.html?id=${item.id}">
+
+<button>
+
+查看商品
+
+</button>
+
+</a>
+
+
+
+</div>
+
+`;
+
+
+
+});
+
+
+
+
+document.getElementById(
+"product-list"
+).innerHTML=html;
+
 
 
 }
+
 
 
 
