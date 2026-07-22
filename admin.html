@@ -32,13 +32,16 @@
 <div class="logo">
 
 🍶 国韵白酒后台
-  
+
 </div>
+
+
 <button onclick="logout()">
 
 退出登录
 
 </button>
+
 
 </header>
 
@@ -47,8 +50,8 @@
 
 
 
-<div class="container">
 
+<div class="container">
 
 
 <h1>
@@ -111,7 +114,6 @@ placeholder="库存数量">
 
 
 
-
 <button onclick="addProduct()">
 
 添加商品
@@ -120,8 +122,6 @@ placeholder="库存数量">
 
 
 
-
-
 </div>
 
 
@@ -130,16 +130,6 @@ placeholder="库存数量">
 
 
 
-
-<div class="container">
-
-
-<h2>
-
-操作说明
-
-</h2>
-</div>
 
 <div class="container">
 
@@ -151,14 +141,23 @@ placeholder="库存数量">
 </h2>
 
 
+
 <div id="product-list">
 
-加载中...
+加载商品中...
 
 </div>
 
 
+
 </div>
+
+
+
+
+
+
+
 
 <div class="container">
 
@@ -170,6 +169,7 @@ placeholder="库存数量">
 </h2>
 
 
+
 <div id="order-list">
 
 加载订单中...
@@ -177,39 +177,30 @@ placeholder="库存数量">
 </div>
 
 
+
 </div>
+
+
+
+
+
+
 
 
 <!-- Supabase SDK -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
+
+
+<!-- 创建 Supabase client -->
+
 <script src="js/auth.js"></script>
 
-<script src="js/admin.js"></script>
-
-
-async function checkAdmin(){
-
-
-const {data}=await client.auth.getSession();
 
 
 
-if(!data.session){
-
-location.href="admin-login.html";
-
-}
-
-
-}
-
-
-checkAdmin();
-
-
-</script>
 <!-- 后台功能 -->
 
 <script src="js/admin.js"></script>
