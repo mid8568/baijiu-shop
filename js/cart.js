@@ -23,16 +23,24 @@ localStorage.getItem("cart")
 
 
 
+let products=[];
+
+
+
 async function loadCart(){
 
 
 let html="";
 
+let total=0;
+
+
 
 for(let item of cart){
 
 
-let {data}=await client
+
+const {data,error}=await client
 .from("products")
 .select("*")
 .eq("id",item.id)
@@ -40,22 +48,48 @@ let {data}=await client
 
 
 
+if(error)
+continue;
+
+
+
+products.push(data);
+
+
+
+total += Number(data.price);
+
+
+
 html += `
 
 <div class="card">
+
 
 <img src="${data.image}">
 
 
 <h3>
+
 ${data.name}
+
 </h3>
 
 
-<p>
-价格:
+
+<p class="price">
+
 ¥${data.price}
+
 </p>
+
+
+
+<button onclick="removeCart(${data.id})">
+
+删除
+
+</button>
 
 
 </div>
@@ -65,39 +99,85 @@ ${data.name}
 }
 
 
+
 document.getElementById(
 "cart-list"
 ).innerHTML=html;
+
+
+
+document.getElementById(
+"total"
+).innerHTML=
+"总价：¥"+total;
+
 
 
 }
 
 
 
+
+// 删除购物车
+
+function removeCart(id){
+
+
+
+cart =
+cart.filter(
+item=>item.id!=id
+);
+
+
+
+localStorage.setItem(
+"cart",
+JSON.stringify(cart)
+);
+
+
+
+location.reload();
+
+
+}
+
+
+
+
+
+
+// 提交订单
+
 async function submitOrder(){
 
 
-let name=
+
+let name =
 document.getElementById("customer").value;
 
 
-let phone=
+let phone =
 document.getElementById("phone").value;
 
 
-let address=
+let address =
 document.getElementById("address").value;
 
 
 
-for(let item of cart){
+if(!name||!phone||!address){
+
+alert("请填写完整信息");
+
+return;
+
+}
 
 
-let {data}=await client
-.from("products")
-.select("*")
-.eq("id",item.id)
-.single();
+
+for(let product of products){
 
 
 
@@ -105,11 +185,11 @@ await client
 .from("orders")
 .insert({
 
-product_id:data.id,
+product_id:product.id,
 
-product_name:data.name,
+product_name:product.name,
 
-price:data.price,
+price:product.price,
 
 quantity:1,
 
@@ -129,7 +209,13 @@ address:address
 alert("订单提交成功");
 
 
+
 localStorage.removeItem("cart");
+
+
+
+location.href="index.html";
+
 
 
 }
