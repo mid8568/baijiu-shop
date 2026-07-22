@@ -36,6 +36,7 @@
 </div>
 
 
+
 <button onclick="logout()">
 
 退出登录
@@ -59,6 +60,7 @@
 添加白酒商品
 
 </h1>
+
 
 
 
@@ -102,6 +104,7 @@ placeholder="商品介绍">
 
 
 
+
 <input
 
 id="stock"
@@ -109,6 +112,51 @@ id="stock"
 type="number"
 
 placeholder="库存数量">
+
+
+
+
+
+
+<!-- 商品分类 -->
+
+<select id="category">
+
+
+<option value="酱香型">
+
+酱香型
+
+</option>
+
+
+
+<option value="浓香型">
+
+浓香型
+
+</option>
+
+
+
+<option value="清香型">
+
+清香型
+
+</option>
+
+
+
+<option value="收藏酒">
+
+收藏酒
+
+</option>
+
+
+
+</select>
+
 
 
 
@@ -122,7 +170,9 @@ placeholder="库存数量">
 
 
 
+
 </div>
+
 
 
 
@@ -159,6 +209,7 @@ placeholder="库存数量">
 
 
 
+
 <div class="container">
 
 
@@ -187,18 +238,26 @@ placeholder="库存数量">
 
 
 
-<!-- Supabase SDK -->
+<footer>
+
+© 2026 国韵白酒商城后台
+
+</footer>
+
+
+
+
+
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
 
 
-
-
-<!-- 后台功能 -->
-
 <script src="js/admin.js"></script>
+
 
 
 
