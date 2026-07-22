@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>白酒商城后台</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+
+<body>
+
+
+<h1 style="text-align:center;margin:40px;">
+🍶 白酒商城管理后台
+</h1>
+
+
+
+<div class="container">
+
+
+<h2>
+添加白酒
+</h2>
+
+
+<input id="name" placeholder="白酒名称">
+
+
+<input id="price" placeholder="价格">
+
+
+<input id="image" placeholder="图片地址">
+
+
+<textarea id="description"
+placeholder="商品介绍">
+</textarea>
+
+
+<input id="stock"
+placeholder="库存">
+
+
+<button onclick="addProduct()">
+
+添加商品
+
+</button>
+
+
+</div>
+
+
+
+<div class="container">
+
+
+<h2>
+商品列表
+</h2>
+
+
+<div id="list">
+
+</div>
+
+
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="js/admin.js"></script>
+
+
+</body>
+
+</html>
