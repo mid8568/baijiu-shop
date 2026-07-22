@@ -1,5 +1,7 @@
 <!DOCTYPE html>
+
 <html lang="zh-CN">
+
 
 <head>
 
@@ -20,7 +22,9 @@
 
 
 
+
 <body>
+
 
 
 <header>
@@ -34,42 +38,66 @@
 
 
 
+
+
 <nav>
 
 
-<a href="#">
+<a href="index.html">
+
 首页
+
 </a>
 
 
-<a href="#">
+
+<a onclick="filterProducts('酱香型')">
+
 酱香白酒
+
 </a>
 
 
-<a href="#">
+
+<a onclick="filterProducts('浓香型')">
+
 浓香白酒
+
 </a>
 
 
-<a href="#">
+
+<a onclick="filterProducts('收藏酒')">
+
 收藏酒
+
 </a>
+
 
 
 </nav>
 
 
 
-<div class="cart">
+
+
+<a href="cart.html">
+
+<div class="cart" id="cart-count">
 
 购物车 0
 
 </div>
 
+</a>
+
+
 
 
 </header>
+
+
+
 
 
 
@@ -82,11 +110,13 @@
 <div>
 
 
+
 <h1>
 
 中国白酒 · 国酒之韵
 
 </h1>
+
 
 
 
@@ -98,11 +128,13 @@
 
 
 
-<a class="btn">
+
+<a href="#product-list" class="btn">
 
 立即购买
 
 </a>
+
 
 
 </div>
@@ -110,6 +142,8 @@
 
 
 </section>
+
+
 
 
 
@@ -127,14 +161,123 @@
 
 
 
-<!-- Supabase商品自动加载区域 -->
 
-<section 
-class="products" 
+
+
+
+<!-- 搜索和排序 -->
+
+
+<div class="filter">
+
+
+
+<input
+
+id="search"
+
+placeholder="搜索白酒"
+
+oninput="searchProducts()"
+
+
+
+>
+
+
+
+<select onchange="sortPrice(this.value)">
+
+
+
+<option value="">
+
+价格排序
+
+</option>
+
+
+
+<option value="low">
+
+价格最低
+
+</option>
+
+
+
+<option value="high">
+
+价格最高
+
+</option>
+
+
+
+</select>
+
+
+
+
+<button onclick="filterProducts('全部')">
+
+全部
+
+</button>
+
+
+
+<button onclick="filterProducts('酱香型')">
+
+酱香型
+
+</button>
+
+
+
+
+<button onclick="filterProducts('浓香型')">
+
+浓香型
+
+</button>
+
+
+
+
+<button onclick="filterProducts('收藏酒')">
+
+收藏酒
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- 商品自动加载 -->
+
+
+<section
+
+class="products"
+
 id="product-list">
 
 
+加载商品中...
+
+
 </section>
+
 
 
 
@@ -154,11 +297,15 @@ id="product-list">
 
 
 
+
 <p>
 
 传承千年酿酒文化，
+
 精选优质粮食，
+
 采用传统发酵工艺，
+
 打造中国白酒精品。
 
 </p>
@@ -166,6 +313,7 @@ id="product-list">
 
 
 </section>
+
 
 
 
@@ -186,25 +334,61 @@ id="product-list">
 
 
 
+
+
+<!-- Supabase -->
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+
+
+<script src="js/app.js"></script>
+
+
+
+
+
+
 <script>
 
 
-let count = 0;
+// 显示购物车数量
+
+
+function updateCartCount(){
 
 
 
-document.querySelector(".cart")
-.onclick=function(){
+let cart =
+JSON.parse(
+
+localStorage.getItem("cart")
+
+||
+"[]"
+
+);
 
 
-count++;
 
+document.getElementById(
+"cart-count"
+).innerHTML =
 
-this.innerHTML =
-"购物车 " + count;
+"购物车 "
++
+cart.length;
+
 
 
 }
+
+
+
+
+updateCartCount();
 
 
 
@@ -214,18 +398,9 @@ this.innerHTML =
 
 
 
-<!-- Supabase -->
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-
-
-<!-- 商品加载 -->
-
-<script src="js/app.js"></script>
-
 
 
 </body>
+
 
 </html>
