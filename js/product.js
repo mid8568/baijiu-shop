@@ -25,8 +25,15 @@ const id =
 params.get("id");
 
 
+// 保存当前商品ID
+
+let currentProductId = id;
 
 
+
+
+
+// 加载商品
 
 async function loadProduct(){
 
@@ -40,6 +47,7 @@ const {data,error}=await client
 
 
 if(error){
+
 
 console.log(error);
 
@@ -62,6 +70,7 @@ document.getElementById(
 ).innerHTML =
 
 
+
 `
 
 <img src="${data.image}">
@@ -71,7 +80,9 @@ document.getElementById(
 
 
 <h1>
+
 ${data.name}
+
 </h1>
 
 
@@ -101,7 +112,6 @@ ${data.stock}
 
 
 
-
 <button onclick="addCart(${data.id})">
 
 加入购物车
@@ -112,6 +122,7 @@ ${data.stock}
 
 </div>
 
+
 `;
 
 
@@ -120,9 +131,8 @@ ${data.stock}
 
 
 
-
-
 // 加入购物车
+
 
 function addCart(productId){
 
@@ -165,4 +175,258 @@ alert("已加入购物车");
 
 
 
+
+
+// 加载评价
+
+
+async function loadReviews(){
+
+
+
+const {data,error}=await client
+.from("reviews")
+.select("*")
+.eq(
+"product_id",
+currentProductId
+)
+.order(
+"id",
+{
+ascending:false
+}
+);
+
+
+
+
+if(error){
+
+
+console.log(error);
+
+return;
+
+}
+
+
+
+
+let html="";
+
+
+
+if(data.length===0){
+
+
+html="暂无评价";
+
+
+}
+
+
+
+data.forEach(item=>{
+
+
+html+=`
+
+
+<div class="card">
+
+
+<h3>
+
+${item.username}
+
+</h3>
+
+
+
+<p>
+
+评分：
+
+${"⭐".repeat(item.rating)}
+
+</p>
+
+
+
+<p>
+
+${item.content}
+
+</p>
+
+
+
+</div>
+
+
+`;
+
+
+
+});
+
+
+
+
+document.getElementById(
+"reviews"
+).innerHTML=html;
+
+
+
+}
+
+
+
+
+
+
+
+// 发布评价
+
+
+async function addReview(){
+
+
+
+const content =
+document.getElementById(
+"review-content"
+).value;
+
+
+
+const rating =
+Number(
+document.getElementById(
+"rating"
+).value
+);
+
+
+
+
+if(!content){
+
+
+alert("请输入评价");
+
+
+return;
+
+}
+
+
+
+
+
+const {data:userData}=await client.auth.getUser();
+
+
+
+const user =
+userData.user;
+
+
+
+if(!user){
+
+
+alert(
+"请先登录"
+);
+
+
+location.href =
+"user-login.html";
+
+
+return;
+
+
+}
+
+
+
+
+
+const {error}=await client
+.from("reviews")
+.insert({
+
+
+product_id:
+currentProductId,
+
+
+user_id:
+user.id,
+
+
+username:
+user.email,
+
+
+content:
+content,
+
+
+rating:
+rating
+
+
+});
+
+
+
+
+
+if(error){
+
+
+alert(
+error.message
+);
+
+
+return;
+
+}
+
+
+
+alert(
+"评价成功"
+);
+
+
+
+document.getElementById(
+"review-content"
+).value="";
+
+
+
+loadReviews();
+
+
+
+}
+
+
+
+
+
+// 页面加载
+
+
 loadProduct();
+
+
+loadReviews();
