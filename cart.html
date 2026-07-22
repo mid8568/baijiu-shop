@@ -7,6 +7,9 @@
 
 <meta charset="UTF-8">
 
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+
 <title>
 购物车
 </title>
@@ -22,13 +25,29 @@
 <body>
 
 
+
 <header>
 
 <div class="logo">
+
 🍶 国韵白酒
+
 </div>
 
+
+<nav>
+
+<a href="index.html">
+首页
+</a>
+
+
+</nav>
+
+
 </header>
+
+
 
 
 
@@ -36,7 +55,7 @@
 
 
 <h1>
-确认订单
+我的购物车
 </h1>
 
 
@@ -49,24 +68,37 @@
 
 
 
+<h2 id="total">
+
+总价：¥0
+
+</h2>
+
+
+
 <h2>
 收货信息
 </h2>
 
 
 
-<input id="customer"
+<input 
+id="customer"
 placeholder="姓名">
 
 
 
-<input id="phone"
+<input 
+id="phone"
 placeholder="手机号">
 
 
 
-<input id="address"
+<textarea
+id="address"
 placeholder="收货地址">
+</textarea>
+
 
 
 
@@ -82,6 +114,8 @@ placeholder="收货地址">
 
 
 
+
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
@@ -89,5 +123,6 @@ placeholder="收货地址">
 
 
 </body>
+
 
 </html>
