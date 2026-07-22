@@ -7,10 +7,9 @@ const SUPABASE_KEY =
 
 
 const client = supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
+    SUPABASE_URL,
+    SUPABASE_KEY
 );
-
 
 
 
@@ -18,7 +17,7 @@ SUPABASE_KEY
 
 const params =
 new URLSearchParams(
-window.location.search
+    window.location.search
 );
 
 
@@ -32,7 +31,6 @@ params.get("id");
 async function loadProduct(){
 
 
-
 const {data,error}=await client
 .from("products")
 .select("*")
@@ -41,12 +39,14 @@ const {data,error}=await client
 
 
 
-
 if(error){
+
+console.log(error);
+
 
 document.getElementById(
 "product-detail"
-).innerHTML=
+).innerHTML =
 "商品不存在";
 
 
@@ -59,7 +59,9 @@ return;
 
 document.getElementById(
 "product-detail"
-).innerHTML=
+).innerHTML =
+
+
 `
 
 <img src="${data.image}">
@@ -69,10 +71,9 @@ document.getElementById(
 
 
 <h1>
-
 ${data.name}
-
 </h1>
+
 
 
 <p class="price">
@@ -82,11 +83,13 @@ ${data.name}
 </p>
 
 
+
 <p>
 
 ${data.description}
 
 </p>
+
 
 
 <p>
@@ -97,15 +100,17 @@ ${data.stock}
 </p>
 
 
-<button>
 
-立即购买
+
+<button onclick="addCart(${data.id})">
+
+加入购物车
 
 </button>
 
 
-</div>
 
+</div>
 
 `;
 
@@ -115,30 +120,38 @@ ${data.stock}
 
 
 
-loadProduct();
-function addCart(){
 
 
-let cart =
-JSON.parse(
+// 加入购物车
+
+function addCart(productId){
+
+
+
+let cart = JSON.parse(
+
 localStorage.getItem("cart")
 ||
 "[]"
+
 );
 
 
 
 cart.push({
 
-id:id
+id:productId
 
 });
 
 
 
 localStorage.setItem(
+
 "cart",
+
 JSON.stringify(cart)
+
 );
 
 
@@ -147,3 +160,9 @@ alert("已加入购物车");
 
 
 }
+
+
+
+
+
+loadProduct();
