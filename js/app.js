@@ -87,16 +87,15 @@ async function loadProducts(){
 
 
 
-            <a href="product.html?id=${product.id}">
+            <a href="product.html?id=${item.id}">
 
             <button>
 
-            查看详情
+             查看商品
 
             </button>
 
-            </a>
-
+             </a>
 
         </div>
 
