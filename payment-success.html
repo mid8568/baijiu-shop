@@ -1,48 +1,153 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="zh-CN">
+
 
 <head>
+
+
+<meta charset="UTF-8">
+
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
 
 <title>
 支付成功
 </title>
 
+
+
 <link rel="stylesheet" href="css/style.css">
 
+
+
 </head>
+
+
 
 
 <body>
 
 
+
 <div class="container">
+
 
 
 <h1>
 
-支付成功 🎉
+🎉 支付成功
 
 </h1>
 
 
-<p>
+
+
+<h2>
 
 感谢购买国韵白酒
+
+</h2>
+
+
+
+
+<p id="order-info">
+
+正在获取订单信息...
 
 </p>
 
 
-<a href="my-orders.html">
 
-查看订单
+
+
+<a class="btn" href="my-orders.html">
+
+查看我的订单
 
 </a>
+
+
+
+
+
+<br><br>
+
+
+
+
+
+<a href="index.html">
+
+返回商城首页
+
+</a>
+
+
 
 
 </div>
 
 
+
+
+
+<script>
+
+
+// 获取订单编号
+
+
+const params =
+new URLSearchParams(
+window.location.search
+);
+
+
+
+const orderId =
+params.get("order");
+
+
+
+
+
+if(orderId){
+
+
+document.getElementById(
+"order-info"
+).innerHTML =
+
+"订单编号："
++
+orderId;
+
+
+
+}else{
+
+
+document.getElementById(
+"order-info"
+).innerHTML =
+
+"订单已生成";
+
+
+}
+
+
+
+</script>
+
+
+
+
+
 </body>
+
 
 </html>
