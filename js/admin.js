@@ -7,66 +7,204 @@ const SUPABASE_KEY =
 
 
 const client = supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
+SUPABASE_URL,
+SUPABASE_KEY
 );
 
 
 
+// 添加商品
+
 async function addProduct(){
 
 
-    const product={
-
-        name:
-        document.getElementById("name").value,
+const product={
 
 
-        price:
-        Number(
-        document.getElementById("price").value
-        ),
+name:
+document.getElementById("name").value,
 
 
-        image:
-        document.getElementById("image").value,
+price:
+Number(
+document.getElementById("price").value
+),
 
 
-        description:
-        document.getElementById("description").value,
+image:
+document.getElementById("image").value,
 
 
-        stock:
-        Number(
-        document.getElementById("stock").value
-        )
-
-    };
+description:
+document.getElementById("description").value,
 
 
+stock:
+Number(
+document.getElementById("stock").value
+)
 
-    const {error}=await client
-    .from("products")
-    .insert(product);
+
+};
 
 
 
-    if(error){
-
-        alert(
-        "添加失败:"
-        +error.message
-        );
-
-        return;
-
-    }
+const {error}=await client
+.from("products")
+.insert(product);
 
 
-    alert("白酒添加成功");
+
+if(error){
+
+alert(
+"添加失败:"
++error.message
+);
+
+return;
+
+}
 
 
-    location.reload();
+
+alert("白酒添加成功");
+
+
+loadProducts();
 
 
 }
+
+
+
+// 加载商品列表
+
+async function loadProducts(){
+
+
+const {data,error}=await client
+.from("products")
+.select("*")
+.order("id",{ascending:false});
+
+
+
+if(error){
+
+console.log(error);
+
+return;
+
+}
+
+
+
+let html="";
+
+
+
+data.forEach(item=>{
+
+
+html+=`
+
+<div class="card">
+
+
+<img src="${item.image}">
+
+
+<h3>
+${item.name}
+</h3>
+
+
+<p>
+价格：
+¥${item.price}
+</p>
+
+
+<p>
+库存：
+${item.stock}
+</p>
+
+
+<button onclick="deleteProduct(${item.id})">
+
+删除
+
+</button>
+
+
+</div>
+
+`;
+
+
+});
+
+
+
+document.getElementById(
+"product-list"
+).innerHTML=html;
+
+
+
+}
+
+
+
+
+// 删除商品
+
+
+async function deleteProduct(id){
+
+
+
+let ok=confirm(
+"确定删除这个商品吗?"
+);
+
+
+
+if(!ok)
+return;
+
+
+
+const {error}=await client
+.from("products")
+.delete()
+.eq("id",id);
+
+
+
+if(error){
+
+alert(error.message);
+
+return;
+
+}
+
+
+
+alert("删除成功");
+
+
+loadProducts();
+
+
+}
+
+
+
+
+// 页面打开自动加载
+
+loadProducts();
