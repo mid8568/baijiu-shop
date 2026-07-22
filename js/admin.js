@@ -235,3 +235,14 @@ loadProducts();
 // 页面打开自动加载
 
 loadProducts();
+async function logout(){
+
+
+await client.auth.signOut();
+
+
+
+location.href="admin-login.html";
+
+
+}
