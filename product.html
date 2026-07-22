@@ -1,243 +1,175 @@
 <!DOCTYPE html>
-
-<html lang="zh-CN">
-
-
+<html>
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-
-
-<title>
-白酒商品详情
-</title>
-
-
-<link rel="stylesheet" href="css/style.css">
-
-
+<title>酒类商城</title>
 </head>
-
-
-
-
 
 <body>
 
 
+<h1>酒类商城</h1>
 
-<header>
 
-
-<div class="logo">
-
-🍶 国韵白酒
-
-</div>
-
-
-
-
-<nav>
-
-
-<a href="index.html">
-
-首页
-
-</a>
-
-
-
-<a href="cart.html">
-
-购物车
-
-</a>
-
-
-
-<a href="my-orders.html">
-
-我的订单
-
-</a>
-
-
-
-</nav>
-
-
-
-</header>
-
-
-
-
-
-
-
-
-<div class="container" id="product-detail">
-
-
-加载商品中...
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- 商品评价 -->
-
-
-<div class="container">
-
-
-
-<h2>
-
-商品评价
-
-</h2>
-
-
-
-
-
-
-<div id="reviews">
-
-
-加载评价中...
-
-
-</div>
-
-
-
-
-
-
-
-
-<textarea
-
-id="review-content"
-
-placeholder="请输入你的评价">
-
-</textarea>
-
-
-
-
-
-
-
-<select id="rating">
-
-
-<option value="5">
-
-⭐⭐⭐⭐⭐
-
-</option>
-
-
-
-<option value="4">
-
-⭐⭐⭐⭐
-
-</option>
-
-
-
-<option value="3">
-
-⭐⭐⭐
-
-</option>
-
-
-
-<option value="2">
-
-⭐⭐
-
-</option>
-
-
-
-<option value="1">
-
-⭐
-
-</option>
-
-
-
-</select>
-
-
-
-
-
-
-
-<button onclick="addReview()">
-
-发表评论
-
-</button>
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<footer>
-
-
-© 2026 国韵白酒商城
-
-
-</footer>
-
-
-
-
-
-
+<div id="product-list"></div>
 
 
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
+<script>
 
-<script src="js/product.js"></script>
 
+const SUPABASE_URL =
+"https://ukxxmxnubxjezkwbbxdr.supabase.co";
+
+
+const SUPABASE_KEY =
+"sb_publishable_2IFHfms3ombozpvZCvaeEg_2VZ2z5hJ";
+
+
+const client =
+supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
+
+
+async function loadProducts(){
+
+
+const {data,error}=await client
+.from("products")
+.select("*");
+
+
+
+if(error){
+
+console.log(error);
+return;
+
+}
+
+
+
+let html="";
+
+
+
+data.forEach(p=>{
+
+
+html+=`
+
+<div>
+
+
+<img src="${p.image}" width="150">
+
+
+<h3>${p.name}</h3>
+
+
+<p>价格：¥${p.price}</p>
+
+
+
+<button onclick="addCart(${p.id})">
+
+加入购物车
+
+</button>
+
+
+</div>
+
+`;
+
+
+
+});
+
+
+
+document.getElementById(
+"product-list"
+).innerHTML=html;
+
+
+
+}
+
+
+
+
+
+function addCart(id){
+
+
+
+let cart =
+JSON.parse(
+localStorage.getItem("cart")
+||
+"[]"
+);
+
+
+
+let item =
+cart.find(
+x=>x.id==id
+);
+
+
+
+if(item){
+
+
+item.quantity++;
+
+
+}else{
+
+
+cart.push({
+
+id:id,
+
+quantity:1
+
+});
+
+
+}
+
+
+
+localStorage.setItem(
+
+"cart",
+
+JSON.stringify(cart)
+
+);
+
+
+
+alert("加入购物车成功");
+
+
+}
+
+
+
+loadProducts();
+
+
+</script>
 
 
 </body>
-
-
 </html>
