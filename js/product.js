@@ -116,3 +116,34 @@ ${data.stock}
 
 
 loadProduct();
+function addCart(){
+
+
+let cart =
+JSON.parse(
+localStorage.getItem("cart")
+||
+"[]"
+);
+
+
+
+cart.push({
+
+id:id
+
+});
+
+
+
+localStorage.setItem(
+"cart",
+JSON.stringify(cart)
+);
+
+
+
+alert("已加入购物车");
+
+
+}
