@@ -1,4 +1,29 @@
+// =========================
+// Supabase配置
+// =========================
+
+
+const SUPABASE_URL =
+"https://ukxxmxnubxjezkwbbxdr.supabase.co";
+
+
+const SUPABASE_KEY =
+"sb_publishable_2IFHfms3ombozpvZCvaeEg_2VZ2z5hJ";
+
+
+
+const client = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+
+
+
+// =========================
 // 检查管理员登录
+// =========================
 
 
 async function checkLogin(){
@@ -20,29 +45,26 @@ return;
 }
 
 
+
 }
 
 
 
 checkLogin();
-const SUPABASE_URL =
-"https://ukxxmxnubxjezkwbbxdr.supabase.co";
-
-
-const SUPABASE_KEY =
-"sb_publishable_2IFHfms3ombozpvZCvaeEg_2VZ2z5hJ";
-
-
-const client = supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
-);
 
 
 
+
+
+
+
+// =========================
 // 添加商品
+// =========================
+
 
 async function addProduct(){
+
 
 
 const product={
@@ -52,18 +74,22 @@ name:
 document.getElementById("name").value,
 
 
+
 price:
 Number(
 document.getElementById("price").value
 ),
 
 
+
 image:
 document.getElementById("image").value,
 
 
+
 description:
 document.getElementById("description").value,
+
 
 
 stock:
@@ -76,58 +102,85 @@ document.getElementById("stock").value
 
 
 
+
 const {error}=await client
 .from("products")
 .insert(product);
 
 
 
+
 if(error){
+
 
 alert(
 "添加失败:"
 +error.message
 );
 
+
 return;
 
+
 }
+
 
 
 
 alert("白酒添加成功");
 
 
+
 loadProducts();
+
 
 
 }
 
 
 
-// 加载商品列表
+
+
+
+
+// =========================
+// 商品列表
+// =========================
+
 
 async function loadProducts(){
+
 
 
 const {data,error}=await client
 .from("products")
 .select("*")
-.order("id",{ascending:false});
+.order(
+"id",
+{
+ascending:false
+}
+);
+
 
 
 
 if(error){
 
+
 console.log(error);
 
+
 return;
+
 
 }
 
 
 
+
 let html="";
+
 
 
 
@@ -142,21 +195,31 @@ html+=`
 <img src="${item.image}">
 
 
+
 <h3>
+
 ${item.name}
+
 </h3>
 
 
+
 <p>
+
 价格：
 ¥${item.price}
+
 </p>
+
 
 
 <p>
+
 库存：
 ${item.stock}
+
 </p>
+
 
 
 <button onclick="deleteProduct(${item.id})">
@@ -166,12 +229,15 @@ ${item.stock}
 </button>
 
 
+
 </div>
+
 
 `;
 
 
 });
+
 
 
 
@@ -186,14 +252,21 @@ document.getElementById(
 
 
 
+
+
+
+
+// =========================
 // 删除商品
+// =========================
 
 
 async function deleteProduct(id){
 
 
 
-let ok=confirm(
+let ok =
+confirm(
 "确定删除这个商品吗?"
 );
 
@@ -204,27 +277,38 @@ return;
 
 
 
+
 const {error}=await client
 .from("products")
 .delete()
-.eq("id",id);
+.eq(
+"id",
+id
+);
+
 
 
 
 if(error){
 
+
 alert(error.message);
+
 
 return;
 
+
 }
+
 
 
 
 alert("删除成功");
 
 
+
 loadProducts();
+
 
 
 }
@@ -232,10 +316,145 @@ loadProducts();
 
 
 
-// 页面打开自动加载
 
-loadProducts();
+
+
+
+// =========================
+// 订单列表
+// =========================
+
+
+async function loadOrders(){
+
+
+
+const {data,error}=await client
+.from("orders")
+.select("*")
+.order(
+"id",
+{
+ascending:false
+}
+);
+
+
+
+
+if(error){
+
+
+console.log(error);
+
+
+return;
+
+
+}
+
+
+
+
+let html="";
+
+
+
+data.forEach(order=>{
+
+
+html+=`
+
+<div class="card">
+
+
+<h3>
+
+订单编号:
+${order.id}
+
+</h3>
+
+
+
+<p>
+
+商品:
+${order.product_name}
+
+</p>
+
+
+
+<p>
+
+价格:
+¥${order.price}
+
+</p>
+
+
+
+<p>
+
+客户:
+${order.customer_name}
+
+</p>
+
+
+
+<p>
+
+电话:
+${order.phone}
+
+</p>
+
+
+
+<p>
+
+地址:
+${order.address}
+
+</p>
+
+
+
+</div>
+
+
+`;
+
+
+});
+
+
+
+
+document.getElementById(
+"order-list"
+).innerHTML=html;
+
+
+
+}
+
+
+
+
+
+
+
+
+// =========================
+// 退出登录
+// =========================
+
+
 async function logout(){
+
 
 
 await client.auth.signOut();
@@ -245,4 +464,16 @@ await client.auth.signOut();
 location.href="admin-login.html";
 
 
+
 }
+
+
+
+
+
+
+// 页面加载
+
+loadProducts();
+
+loadOrders();
