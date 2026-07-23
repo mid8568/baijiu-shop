@@ -1094,3 +1094,47 @@ width:120px;
 margin:0;
 
 }
+.checkout-item{
+
+
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+background:white;
+
+padding:15px;
+
+margin:10px 0;
+
+border-radius:10px;
+
+
+}
+
+
+
+.checkout-item img{
+
+
+width:80px;
+
+height:80px;
+
+object-fit:cover;
+
+
+}
+
+
+
+.checkout input,
+.checkout textarea{
+
+
+background:white;
+
+
+}
