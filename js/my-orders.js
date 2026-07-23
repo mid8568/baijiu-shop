@@ -33,13 +33,10 @@ userData.user;
 
 if(!user){
 
-
-location.href=
-"user-login.html";
-
+document.getElementById("orders").innerHTML=
+"请登录查看个人订单";
 
 return;
-
 
 }
 
