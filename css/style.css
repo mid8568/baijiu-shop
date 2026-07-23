@@ -985,3 +985,112 @@ margin-top:3px;
 
 
 }
+/* =====================
+购物车H5
+===================== */
+
+
+.cart-item{
+
+
+background:white;
+
+margin:15px 0;
+
+padding:15px;
+
+border-radius:15px;
+
+display:flex;
+
+gap:15px;
+
+
+}
+
+
+
+.cart-item img{
+
+
+width:100px;
+
+height:100px;
+
+object-fit:cover;
+
+border-radius:10px;
+
+
+}
+
+
+
+.qty{
+
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
+
+
+}
+
+
+
+.qty button{
+
+
+width:35px;
+
+height:35px;
+
+padding:0;
+
+margin:0;
+
+
+}
+
+
+
+
+
+.cart-bottom{
+
+
+position:fixed;
+
+bottom:60px;
+
+left:0;
+
+width:100%;
+
+background:white;
+
+padding:10px 20px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+box-shadow:0 -3px 10px #ddd;
+
+
+}
+
+
+
+.cart-bottom button{
+
+
+width:120px;
+
+margin:0;
+
+}
