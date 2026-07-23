@@ -3,23 +3,25 @@
 <html lang="zh-CN">
 
 
-<head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<header class="h5-header">
 
 
-<title>
-国韵白酒商城
-</title>
+<div class="h5-logo">
+
+🍶 国韵白酒
+
+</div>
 
 
-<link rel="stylesheet" href="css/style.css">
+
+<a href="cart.html" class="h5-cart">
+
+🛒
+
+</a>
 
 
-</head>
-
+</header>
 
 
 
@@ -40,42 +42,42 @@
 
 
 
-<nav>
+<div class="h5-category">
 
 
-<a href="index.html">
+<button onclick="filterProducts('全部')">
 
-首页
+全部
 
-</a>
-
-
-
-<a onclick="filterProducts('酱香型')">
-
-酱香白酒
-
-</a>
+</button>
 
 
 
-<a onclick="filterProducts('浓香型')">
+<button onclick="filterProducts('酱香型')">
 
-浓香白酒
+酱香
 
-</a>
-
-
-
-<a onclick="filterProducts('收藏酒')">
-
-收藏酒
-
-</a>
+</button>
 
 
 
-</nav>
+<button onclick="filterProducts('浓香型')">
+
+浓香
+
+</button>
+
+
+
+<button onclick="filterProducts('收藏酒')">
+
+收藏
+
+</button>
+
+
+
+</div>
 
 
 
@@ -144,10 +146,16 @@
 </section>
 
 
+<div class="h5-search">
+
+<input 
+id="search"
+placeholder="搜索白酒..."
+oninput="searchProducts()"
+>
 
 
-
-
+</div>
 
 
 
