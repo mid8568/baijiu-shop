@@ -6,13 +6,11 @@ const SUPABASE_KEY =
 "sb_publishable_2IFHfms3ombozpvZCvaeEg_2VZ2z5hJ";
 
 
-
 const client =
 supabase.createClient(
 SUPABASE_URL,
 SUPABASE_KEY
 );
-
 
 
 
@@ -26,9 +24,12 @@ localStorage.getItem("cart")
 
 
 
+// ======================
+// 加载购物车
+// ======================
+
 
 async function loadCart(){
-
 
 
 let html="";
@@ -42,38 +43,48 @@ for(let item of cart){
 
 
 const {data,error}=await client
+
 .from("products")
+
 .select("*")
-.eq("id",item.id)
+
+.eq(
+"id",
+item.id
+)
+
 .single();
 
 
 
-if(error) continue;
+if(error){
+
+console.log(error);
+
+continue;
+
+}
 
 
 
-
-let qty=item.quantity || 1;
-
-
-
-total += Number(data.price)*qty;
+let quantity =
+item.quantity || 1;
 
 
 
+total +=
+Number(data.price)
+*
+quantity;
 
-html +=`
 
 
-<div class="cart-item">
+html+=`
+
+<div class="card">
 
 
 <img src="${data.image}">
-
-
-
-<div>
 
 
 <h3>
@@ -86,35 +97,37 @@ ${data.name}
 
 <p>
 
+价格：
+
 ¥${data.price}
 
 </p>
 
 
 
-<div class="qty">
+<p>
 
+数量：
 
-<button onclick="changeQty(${data.id},-1)">
--
-</button>
+${quantity}
 
-
-
-<span>
-
-${qty}
-
-</span>
+</p>
 
 
 
 <button onclick="changeQty(${data.id},1)">
+
 +
+
 </button>
 
 
-</div>
+
+<button onclick="changeQty(${data.id},-1)">
+
+-
+
+</button>
 
 
 
@@ -128,11 +141,6 @@ ${qty}
 
 </div>
 
-
-</div>
-
-
-
 `;
 
 
@@ -141,16 +149,11 @@ ${qty}
 
 
 
-
-
 if(html===""){
-
 
 html="<h2>购物车为空</h2>";
 
-
 }
-
 
 
 
@@ -164,7 +167,7 @@ document.getElementById(
 "total"
 ).innerHTML=
 
-"合计：¥"+total;
+"总价：¥"+total;
 
 
 
@@ -174,6 +177,9 @@ document.getElementById(
 
 
 
+// ======================
+// 修改数量
+// ======================
 
 
 function changeQty(id,num){
@@ -188,7 +194,6 @@ x=>x.id==id
 
 
 if(item){
-
 
 
 item.quantity += num;
@@ -215,7 +220,9 @@ saveCart();
 
 
 
-
+// ======================
+// 删除
+// ======================
 
 
 function removeCart(id){
@@ -251,6 +258,7 @@ JSON.stringify(cart)
 );
 
 
+
 location.reload();
 
 
@@ -261,16 +269,42 @@ location.reload();
 
 
 
+// ======================
+// 提交订单
+// ======================
 
 
-function checkout(){
+async function submitOrder(){
 
 
-if(cart.length===0){
+
+let name =
+document.getElementById(
+"customer"
+).value;
+
+
+
+let phone =
+document.getElementById(
+"phone"
+).value;
+
+
+
+let address =
+document.getElementById(
+"address"
+).value;
+
+
+
+
+if(!name || !phone || !address){
 
 
 alert(
-"购物车为空"
+"请填写完整信息"
 );
 
 
@@ -281,10 +315,129 @@ return;
 
 
 
-location.href="checkout.html";
+
+// 获取登录用户(可为空)
+
+const {data:userData}=
+
+await client.auth.getUser();
+
+
+
+const user =
+userData.user || null;
+
+
+
+
+for(let item of cart){
+
+
+
+const {data:product,error}=
+
+await client
+
+.from("products")
+
+.select("*")
+
+.eq(
+"id",
+item.id
+)
+
+.single();
+
+
+
+
+
+if(error){
+
+console.log(error);
+
+continue;
+
+}
+
+
+
+
+
+await client
+
+.from("orders")
+
+.insert({
+
+product_id:
+product.id,
+
+
+product_name:
+product.name,
+
+
+price:
+product.price,
+
+
+quantity:
+item.quantity || 1,
+
+
+customer_name:
+name,
+
+
+phone:
+phone,
+
+
+address:
+address,
+
+
+// 登录用户保存ID
+// 游客为空
+
+user_id:
+user ? user.id : null,
+
+
+status:
+"待付款"
+
+
+});
+
 
 
 }
+
+
+
+
+alert(
+"订单提交成功"
+);
+
+
+
+localStorage.removeItem(
+"cart"
+);
+
+
+
+location.href=
+"my-orders.html";
+
+
+
+}
+
 
 
 
