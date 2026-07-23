@@ -232,7 +232,7 @@ alert(
 
 
 location.href =
-"index.html";
+"cart.html";
 
 
 
