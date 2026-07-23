@@ -446,27 +446,84 @@ footer{
 
 
 
-/* 手机适配 */
+/* =========================
+手机端适配
+========================= */
+
 
 @media(max-width:700px){
 
 
-header{
 
-    flex-direction:column;
+body{
 
-    gap:15px;
+font-size:14px;
 
 }
 
 
+
+/* 顶部 */
+
+
+header{
+
+padding:15px;
+
+flex-direction:column;
+
+gap:15px;
+
+}
+
+
+
+.logo{
+
+font-size:22px;
+
+}
+
+
+
 nav{
 
-    display:flex;
+width:100%;
 
-    flex-wrap:wrap;
+justify-content:center;
 
-    justify-content:center;
+}
+
+
+
+nav a{
+
+margin:8px;
+
+font-size:14px;
+
+}
+
+
+
+
+
+.cart{
+
+padding:8px 15px;
+
+}
+
+
+
+
+
+/* 首页banner */
+
+
+.banner{
+
+height:300px;
 
 }
 
@@ -474,7 +531,7 @@ nav{
 
 .banner h1{
 
-    font-size:38px;
+font-size:30px;
 
 }
 
@@ -482,27 +539,209 @@ nav{
 
 .banner p{
 
-    font-size:18px;
+font-size:16px;
 
 }
 
+
+
+
+
+/* 商品列表 */
+
+
+.products{
+
+padding:15px;
+
+grid-template-columns:
+
+repeat(2,1fr);
+
+gap:12px;
+
+}
+
+
+
+
+
+.card{
+
+border-radius:10px;
+
+}
+
+
+
+
+
+.card img{
+
+height:180px;
+
+}
+
+
+
+
+
+.card h3{
+
+font-size:16px;
+
+padding:10px;
+
+}
+
+
+
+
+
+.price{
+
+font-size:20px;
+
+padding:10px;
+
+}
+
+
+
+
+
+button{
+
+
+width:
+
+calc(100% - 20px);
+
+
+margin:
+
+0 10px 15px;
+
+
+padding:10px;
+
+
+font-size:14px;
+
+
+}
+
+
+
+
+
+/* 商品详情 */
 
 
 .container{
 
-    width:90%;
 
-    flex-direction:column;
+width:95%;
+
+
+margin:20px auto;
+
+
+padding:20px;
+
+
+display:flex;
+
+
+flex-direction:column;
+
+
+gap:20px;
+
 
 }
+
 
 
 
 .container img{
 
-    width:100%;
 
-    height:auto;
+width:100%;
+
+
+height:auto;
+
+
+}
+
+
+
+
+
+.container h1{
+
+
+font-size:25px;
+
+
+}
+
+
+
+
+
+/* 输入框 */
+
+
+input,
+textarea,
+select{
+
+
+font-size:16px;
+
+
+}
+
+
+
+
+
+/* 购物车 */
+
+
+#cart-list .card{
+
+
+width:100%;
+
+
+}
+
+
+
+
+/* 后台 */
+
+
+.container{
+
+
+overflow:hidden;
+
+
+}
+
+
+
+
+
+footer{
+
+
+font-size:13px;
+
 
 }
 
