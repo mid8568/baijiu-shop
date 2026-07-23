@@ -3,6 +3,30 @@
 <html lang="zh-CN">
 
 
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+
+<title>
+国韵白酒商城
+</title>
+
+
+<link rel="stylesheet" href="css/style.css">
+
+
+</head>
+
+
+<body>
+
+
+
+<!-- 手机顶部 -->
+
 <header class="h5-header">
 
 
@@ -25,21 +49,76 @@
 
 
 
-<body>
+
+
+<!-- Banner -->
+
+
+<section class="banner">
+
+
+<div>
+
+
+<h1>
+
+中国白酒 · 国酒之韵
+
+</h1>
 
 
 
-<header>
+<p>
+
+精选名酒 | 原浆酿造
+
+</p>
 
 
-<div class="logo">
 
-🍶 国韵白酒
+<a href="#product-list" class="btn">
+
+立即购买
+
+</a>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+<!-- 搜索 -->
+
+
+<div class="h5-search">
+
+
+<input
+
+id="search"
+
+placeholder="搜索白酒..."
+
+oninput="searchProducts()"
+
+
+>
+
 
 </div>
 
 
 
+
+
+
+<!-- 分类 -->
 
 
 <div class="h5-category">
@@ -50,7 +129,6 @@
 全部
 
 </button>
-
 
 
 <button onclick="filterProducts('酱香型')">
@@ -64,6 +142,14 @@
 <button onclick="filterProducts('浓香型')">
 
 浓香
+
+</button>
+
+
+
+<button onclick="filterProducts('清香型')">
+
+清香
 
 </button>
 
@@ -83,80 +169,6 @@
 
 
 
-<a href="cart.html">
-
-<div class="cart" id="cart-count">
-
-购物车 0
-
-</div>
-
-</a>
-
-
-
-
-</header>
-
-
-
-
-
-
-
-
-
-<section class="banner">
-
-
-<div>
-
-
-
-<h1>
-
-中国白酒 · 国酒之韵
-
-</h1>
-
-
-
-
-<p>
-
-精选名酒 | 原浆酿造 | 品质保证
-
-</p>
-
-
-
-
-<a href="#product-list" class="btn">
-
-立即购买
-
-</a>
-
-
-
-</div>
-
-
-
-</section>
-
-
-<div class="h5-search">
-
-<input 
-id="search"
-placeholder="搜索白酒..."
-oninput="searchProducts()"
->
-
-
-</div>
-
 
 
 <h2 class="title">
@@ -169,110 +181,7 @@ oninput="searchProducts()"
 
 
 
-
-
-
-
-<!-- 搜索和排序 -->
-
-
-<div class="filter">
-
-
-
-<input
-
-id="search"
-
-placeholder="搜索白酒"
-
-oninput="searchProducts()"
-
-
-
->
-
-
-
-<select onchange="sortPrice(this.value)">
-
-
-
-<option value="">
-
-价格排序
-
-</option>
-
-
-
-<option value="low">
-
-价格最低
-
-</option>
-
-
-
-<option value="high">
-
-价格最高
-
-</option>
-
-
-
-</select>
-
-
-
-
-<button onclick="filterProducts('全部')">
-
-全部
-
-</button>
-
-
-
-<button onclick="filterProducts('酱香型')">
-
-酱香型
-
-</button>
-
-
-
-
-<button onclick="filterProducts('浓香型')">
-
-浓香型
-
-</button>
-
-
-
-
-<button onclick="filterProducts('收藏酒')">
-
-收藏酒
-
-</button>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- 商品自动加载 -->
-
+<!-- 商品 -->
 
 <section
 
@@ -292,82 +201,115 @@ id="product-list">
 
 
 
-
+<!-- 品牌 -->
 
 <section class="brand">
 
 
 <h2>
 
-国韵白酒品牌理念
+国韵白酒
 
 </h2>
 
 
-
-
 <p>
 
-传承千年酿酒文化，
-
+传承千年酿造文化，
 精选优质粮食，
-
-采用传统发酵工艺，
-
 打造中国白酒精品。
 
 </p>
 
 
-
 </section>
 
 
-<!-- 手机底部导航 -->
+
+
+
+
+
+<!-- 底部导航 -->
+
 
 <div class="mobile-nav">
 
 
 <a href="index.html">
 
+
 🏠
 
-<span>首页</span>
+<span>
+
+首页
+
+</span>
+
 
 </a>
+
+
 
 
 
 <a href="cart.html">
 
+
 🛒
 
-<span>购物车</span>
+<span>
+
+购物车
+
+</span>
+
 
 </a>
+
+
 
 
 
 <a href="my-orders.html">
 
+
 📦
 
-<span>订单</span>
+<span>
+
+订单
+
+</span>
+
 
 </a>
+
+
 
 
 
 <a href="user-login.html">
 
+
 👤
 
-<span>我的</span>
+<span>
+
+我的
+
+</span>
+
 
 </a>
 
 
 </div>
+
+
+
+
 
 
 
@@ -386,71 +328,11 @@ id="product-list">
 
 
 
-<!-- Supabase -->
-
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
 
-
 <script src="js/app.js"></script>
-
-
-
-
-
-
-<script>
-
-
-// 显示购物车数量
-
-
-function updateCartCount(){
-
-
-
-let cart =
-JSON.parse(
-
-localStorage.getItem("cart")
-
-||
-"[]"
-
-);
-
-let count =
-cart.reduce(
-(sum,item)=>
-sum+item.quantity,
-0
-);
-
-
-document.getElementById(
-"cart-count"
-).innerHTML=
-
-"购物车 "
-+
-count;
-
-
-
-}
-
-
-
-
-updateCartCount();
-
-
-
-</script>
-
-
 
 
 
