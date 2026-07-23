@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="zh-CN">
 
 
 <head>
 
-
 <meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 
 <title>
@@ -24,226 +26,64 @@
 
 
 
-<h1>
-我的购物车
-</h1>
+<header class="h5-header">
 
 
+<div class="h5-logo">
 
-<a href="product.html">
+🍶 国韵白酒
 
-继续购物
+</div>
+
+
+<a href="index.html" class="h5-cart">
+
+🏠
 
 </a>
 
 
-<hr>
-
-
-<div id="cart-list"></div>
+</header>
 
 
 
-<h2 id="total"></h2>
 
-<button onclick="goCheckout()">
+
+<div class="container cart-page">
+
+
+<h1>
+
+🛒 我的购物车
+
+</h1>
+
+
+
+<div id="cart-list">
+
+
+加载中...
+
+</div>
+
+
+
+
+<div class="cart-bottom">
+
+
+<h2 id="total">
+
+总价：¥0
+
+</h2>
+
+
+
+<button onclick="checkout()">
+
 去结算
-</button>
-
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-
-
-<script>
-
-
-
-const SUPABASE_URL =
-"https://ukxxmxnubxjezkwbbxdr.supabase.co";
-
-
-
-const SUPABASE_KEY =
-"sb_publishable_2IFHfms3ombozpvZCvaeEg_2VZ2z5hJ";
-
-
-
-
-const client =
-
-supabase.createClient(
-
-SUPABASE_URL,
-
-SUPABASE_KEY
-
-);
-
-
-
-
-
-let cart =
-
-JSON.parse(
-
-localStorage.getItem("cart")
-
-||
-
-"[]"
-
-);
-
-
-
-
-
-console.log(
-"当前购物车:",
-cart
-);
-
-
-
-
-
-
-async function loadCart(){
-
-
-
-let html="";
-
-
-let total=0;
-
-
-
-
-
-for(let item of cart){
-
-
-
-
-
-const {data,error}=await client
-
-.from("products")
-
-.select("*")
-
-.eq(
-
-"id",
-
-item.id
-
-)
-
-.single();
-
-
-
-
-
-if(error){
-
-
-console.log(error);
-
-
-continue;
-
-
-}
-
-
-
-
-
-
-let qty =
-
-item.quantity || 1;
-
-
-
-
-
-total +=
-
-Number(data.price)
-
-*
-
-qty;
-
-
-
-
-
-
-
-html+=`
-
-<div class="card">
-
-
-<img src="${data.image}">
-
-
-
-<h3>
-
-${data.name}
-
-</h3>
-
-
-
-<p>
-
-价格：
-
-¥${data.price}
-
-</p>
-
-
-
-<p>
-
-数量：
-
-${qty}
-
-</p>
-
-
-
-
-<button onclick="changeQty(${data.id},1)">
-
-+
-
-</button>
-
-
-
-<button onclick="changeQty(${data.id},-1)">
-
--
-
-</button>
-
-
-
-<button onclick="removeCart(${data.id})">
-
-删除
 
 </button>
 
@@ -251,170 +91,13 @@ ${qty}
 </div>
 
 
-`;
 
+</div>
 
 
-}
 
 
 
-
-
-
-
-if(html===""){
-
-
-html="<h2>购物车为空</h2>";
-
-
-}
-
-
-
-
-document.getElementById(
-
-"cart-list"
-
-).innerHTML=html;
-
-
-
-document.getElementById(
-
-"total"
-
-).innerHTML=
-
-"总价：¥"+total;
-
-
-
-
-}
-
-
-
-
-
-
-
-
-
-function changeQty(id,num){
-
-
-
-let item =
-
-cart.find(
-
-x=>x.id==id
-
-);
-
-
-
-if(item){
-
-
-item.quantity += num;
-
-
-if(item.quantity<1){
-
-item.quantity=1;
-
-}
-
-
-}
-
-
-saveCart();
-
-
-}
-
-
-
-
-
-
-
-
-function removeCart(id){
-
-
-
-cart =
-
-cart.filter(
-
-x=>x.id!=id
-
-);
-
-
-
-saveCart();
-
-
-}
-
-
-
-
-
-
-
-
-
-function saveCart(){
-
-
-
-localStorage.setItem(
-
-"cart",
-
-JSON.stringify(cart)
-
-);
-
-
-
-location.reload();
-
-
-}
-
-function goCheckout(){
-
-
-if(cart.length===0){
-
-alert("购物车为空");
-
-return;
-
-}
-
-
-location.href="checkout.html";
-
-
-}
-
-
-
-loadCart();
-
-
-
-</script>
 
 <div class="mobile-nav">
 
@@ -423,7 +106,9 @@ loadCart();
 
 🏠
 
-<span>首页</span>
+<span>
+首页
+</span>
 
 </a>
 
@@ -433,7 +118,9 @@ loadCart();
 
 🛒
 
-<span>购物车</span>
+<span>
+购物车
+</span>
 
 </a>
 
@@ -443,7 +130,9 @@ loadCart();
 
 📦
 
-<span>订单</span>
+<span>
+订单
+</span>
 
 </a>
 
@@ -453,12 +142,25 @@ loadCart();
 
 👤
 
-<span>我的</span>
+<span>
+我的
+</span>
 
 </a>
 
 
 </div>
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<script src="js/cart.js"></script>
+
 
 </body>
 
