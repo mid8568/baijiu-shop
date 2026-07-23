@@ -7,9 +7,11 @@
 
 <meta charset="UTF-8">
 
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
 
 <title>
-订单结算
+确认订单
 </title>
 
 
@@ -23,32 +25,23 @@
 <body>
 
 
-<header>
 
-<div class="logo">
+<header class="h5-header">
+
+
+<div class="h5-logo">
 
 🍶 国韵白酒
 
 </div>
 
 
-<nav>
 
-<a href="index.html">
+<a href="cart.html" class="h5-cart">
 
-首页
-
-</a>
-
-
-<a href="cart.html">
-
-购物车
+🛒
 
 </a>
-
-
-</nav>
 
 
 </header>
@@ -57,18 +50,42 @@
 
 
 
-<div class="container">
-
-
-<div>
+<div class="container checkout">
 
 
 <h1>
 
-填写收货信息
+确认订单
 
 </h1>
 
+
+
+<div id="order-products">
+
+加载商品...
+
+</div>
+
+
+
+
+<h2 id="checkout-total">
+
+总价：
+
+</h2>
+
+
+
+
+
+
+<h2>
+
+收货信息
+
+</h2>
 
 
 
@@ -76,9 +93,12 @@
 
 id="customer"
 
-placeholder="收货姓名"
+placeholder="姓名"
+
+
 
 >
+
 
 
 
@@ -86,7 +106,9 @@ placeholder="收货姓名"
 
 id="phone"
 
-placeholder="联系电话"
+placeholder="手机号码"
+
+
 
 >
 
@@ -97,17 +119,11 @@ placeholder="联系电话"
 
 id="address"
 
-placeholder="详细地址">
+placeholder="收货地址"
 
-</textarea>
-
-
+></textarea>
 
 
-
-<h2 id="total-price">
-
-</h2>
 
 
 
@@ -115,16 +131,67 @@ placeholder="详细地址">
 
 <button onclick="submitOrder()">
 
-提交订单
+提交订单并付款
 
 </button>
 
 
 
-</div>
 
 
 </div>
+
+
+
+
+
+
+
+<div class="mobile-nav">
+
+
+<a href="index.html">
+
+🏠
+
+<span>首页</span>
+
+</a>
+
+
+
+<a href="cart.html">
+
+🛒
+
+<span>购物车</span>
+
+</a>
+
+
+
+<a href="my-orders.html">
+
+📦
+
+<span>订单</span>
+
+</a>
+
+
+
+<a href="user-login.html">
+
+👤
+
+<span>我的</span>
+
+</a>
+
+
+</div>
+
+
 
 
 
