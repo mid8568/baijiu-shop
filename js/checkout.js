@@ -6,6 +6,7 @@ const SUPABASE_KEY =
 "sb_publishable_2IFHfms3ombozpvZCvaeEg_2VZ2z5hJ";
 
 
+
 const client =
 supabase.createClient(
 SUPABASE_URL,
@@ -17,14 +18,125 @@ SUPABASE_KEY
 
 let cart =
 JSON.parse(
-
 localStorage.getItem("cart")
-
 ||
-
 "[]"
-
 );
+
+
+
+let products=[];
+
+
+
+
+async function loadCheckout(){
+
+
+
+let html="";
+
+let total=0;
+
+
+
+for(let item of cart){
+
+
+
+const {data}=await client
+
+.from("products")
+
+.select("*")
+
+.eq(
+"id",
+item.id
+)
+
+.single();
+
+
+
+
+
+if(!data)
+continue;
+
+
+
+
+products.push(data);
+
+
+
+let qty=item.quantity||1;
+
+
+
+total += Number(data.price)*qty;
+
+
+
+html +=`
+
+
+<div class="checkout-item">
+
+
+<img src="${data.image}">
+
+
+<p>
+
+${data.name}
+
+</p>
+
+
+<p>
+
+数量:${qty}
+
+</p>
+
+
+<p>
+
+¥${data.price}
+
+</p>
+
+
+</div>
+
+
+`;
+
+
+
+}
+
+
+
+document.getElementById(
+"order-products"
+).innerHTML=html;
+
+
+
+document.getElementById(
+"checkout-total"
+).innerHTML=
+
+"总价：¥"+total;
+
+
+
+}
+
+
 
 
 
@@ -48,7 +160,6 @@ document.getElementById(
 
 
 
-
 let address =
 document.getElementById(
 "address"
@@ -57,12 +168,7 @@ document.getElementById(
 
 
 
-
-if(
-!customer ||
-!phone ||
-!address
-){
+if(!customer||!phone||!address){
 
 
 alert(
@@ -80,18 +186,13 @@ return;
 
 
 
-const {
-data:userData
-}
-=
+const {data:userData}=
+
 await client.auth.getUser();
 
 
 
-
-const user =
-userData.user;
-
+const user=userData.user;
 
 
 
@@ -116,25 +217,43 @@ return;
 
 
 
-for(let item of cart){
+
+// 创建订单
 
 
 
-const {
-data:product,
-error
-}
-=
-await client
+const product=products[0];
 
-.from("products")
 
-.select("*")
 
-.eq(
-"id",
-item.id
-)
+const {data,error}=await client
+
+.from("orders")
+
+.insert({
+
+product_id:product.id,
+
+product_name:product.name,
+
+price:product.price,
+
+quantity:1,
+
+customer_name:customer,
+
+phone:phone,
+
+address:address,
+
+user_id:user.id,
+
+status:"待付款"
+
+
+})
+
+.select()
 
 .single();
 
@@ -142,62 +261,14 @@ item.id
 
 
 
+
 if(error){
 
-console.log(error);
 
-continue;
-
-}
+alert(error.message);
 
 
-
-
-
-await client
-
-.from("orders")
-
-.insert({
-
-product_id:
-product.id,
-
-
-product_name:
-product.name,
-
-
-price:
-product.price,
-
-
-quantity:
-item.quantity,
-
-
-customer_name:
-customer,
-
-
-phone:
-phone,
-
-
-address:
-address,
-
-
-user_id:
-user.id,
-
-
-status:
-"待付款"
-
-
-});
-
+return;
 
 
 }
@@ -205,22 +276,69 @@ status:
 
 
 
-localStorage.removeItem(
-"cart"
+
+// 调用你的服务器Stripe
+
+
+const response =
+await fetch(
+
+"https://你的服务器地址/create-payment",
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":
+
+"application/json"
+
+},
+
+
+body:JSON.stringify({
+
+orderId:data.id
+
+})
+
+
+}
+
 );
 
 
 
 
-alert(
-"订单提交成功"
-);
+
+const result =
+await response.json();
 
 
 
-location.href=
-"my-orders.html";
+
+
+if(result.url){
+
+
+
+window.location.href=result.url;
+
+
+}
+
+
+
 
 
 
 }
+
+
+
+
+
+
+loadCheckout();
